@@ -428,25 +428,22 @@ model-viewer{
   transform: translateY(1px);
 }
 
-.fullscreen{
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
+.present{
+  /* Layout-only fallback (if browser Fullscreen API is blocked) */
   background: rgba(11,11,13,.86);
-  backdrop-filter: blur(10px);
-  padding: 16px;
 }
-.fullscreen .container{
+
+.present .container{
   max-width: 1400px;
 }
-.fullscreen .grid{
+.present .grid{
   grid-template-columns: 380px 1fr;
   height: calc(100vh - 32px);
 }
-.fullscreen .viewer-wrap{
+.present .viewer-wrap{
   min-height: calc(100vh - 32px);
 }
-.fullscreen model-viewer{
+.present model-viewer{
   min-height: 60vh;
   height: 100%;
 }

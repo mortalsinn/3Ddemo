@@ -349,17 +349,44 @@ async function main(){
     mv.autoRotate = !mv.autoRotate;
     document.getElementById("btnAuto").textContent = mv.autoRotate ? "Stop Rotate" : "Auto Rotate";
   });
-  document.getElementById("btnFit").addEventListener("click", ()=>{
-    try { mv.jumpCameraToGoal(); } catch(e) {}
+  document.getElementById("btnFit").addEventListener("click", async ()=>{
+    try {
+      // Tight framing using percentage-based orbit (web-friendly)
+      mv.setAttribute("camera-target", "auto auto auto");
+      mv.setAttribute("camera-orbit", "0deg 75deg 105%");
+      if (typeof mv.updateFraming === "function") { await mv.updateFraming(); }
+      if (typeof mv.jumpCameraToGoal === "function") { mv.jumpCameraToGoal(); }
+    } catch(e) { console.warn("Fit failed:", e); }
   });
 
   // Fullscreen (presentation-friendly)
   const btnFull = document.getElementById("btnFull");
+  async function syncFullLabel(){
+    if(!btnFull) return;
+    const isFs = !!document.fullscreenElement;
+    btnFull.textContent = isFs ? "Exit Fullscreen" : "Fullscreen";
+  }
   if(btnFull){
-    btnFull.addEventListener("click", ()=>{
-      document.body.classList.toggle("fullscreen");
-      btnFull.textContent = document.body.classList.contains("fullscreen") ? "Exit Fullscreen" : "Fullscreen";
+    btnFull.addEventListener("click", async ()=>{
+      try{
+        // Prefer true browser fullscreen
+        if(!document.fullscreenElement && document.documentElement.requestFullscreen){
+          await document.documentElement.requestFullscreen();
+        } else if(document.fullscreenElement && document.exitFullscreen){
+          await document.exitFullscreen();
+        } else {
+          // Fallback: layout-only "presentation" mode
+          document.body.classList.toggle("present");
+        }
+      } catch(e){
+        // If fullscreen is blocked, use fallback
+        document.body.classList.toggle("present");
+      } finally {
+        syncFullLabel();
+      }
     });
+    document.addEventListener("fullscreenchange", syncFullLabel);
+    syncFullLabel();
   }
 
   // Share control: click the "Share" pill anywhere to copy link
