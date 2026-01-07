@@ -367,6 +367,14 @@ async function main(){
       .map((m,i)=> ({m,i,id:modelId(m,i)}))
       .filter(x => matches(x.m, q, cat));
 
+    const libCount = document.getElementById("libCount");
+    if(libCount){
+      const catLabel = cat ? ` • ${cat}` : "";
+      const qLabel = q ? ` • “${q}”` : "";
+      libCount.textContent = `(${filtered.length}/${models.length}${catLabel}${qLabel})`;
+    }
+
+
     if(filtered.length === 0){
       listEl?.appendChild(el("div", { class:"item active", "data-id":"none" }, [
         el("div", { class:"badge" }, "0"),
