@@ -1,74 +1,50 @@
-IRONWOOD 3D PRODUCT DEMO (STATIC) — v2 (Product Info + Filters + Share Links)
+IRONWOOD 3D PRODUCT DEMO — v15
+Build: 2026-01-07
 
-What's in here:
-- index.html
-- styles.css
-- app.js
-- models/
-    - models.json  (list of models + product info)
-    - ironwood-demo.glb  (your current model)
-- assets/
-    - logo.png (optional: drop your website logo here to match your branding even more)
+What this is
+- A static (no server) demo site that:
+  1) Shows 3D products (GLB) with rotate/zoom/pan
+  2) Includes an Estimate Builder (scopes + line items + export + print/PDF)
+  3) Supports Zoho CRM integration via Zoho Flow webhook (optional)
 
-FASTEST FREE HOSTING (Netlify Drop):
-1) Go to Netlify and use Deploy / drag-and-drop.
-2) Drag THIS WHOLE FOLDER in (or the ZIP).
-3) You'll get a shareable URL instantly.
+Folder structure (IMPORTANT)
+- Upload the *contents* of this folder to your repo ROOT so URLs match:
+  index.html
+  app.js
+  styles.css
+  manifest.json
+  estimate.html
+  estimate.js
+  estimate_catalog.json
+  estimate_scopes.json
+  /models/*
+  /assets/* (if present)
 
-GITHUB PAGES:
-1) Create a public repo
-2) Upload these files/folders
-3) Repo Settings → Pages → Deploy from branch → main → /(root)
+GitHub Pages (recommended)
+1) Repo Settings → Pages
+2) Source: Deploy from a branch (usually main) / root
+3) Visit your Pages URL
 
-LOCAL PREVIEW (optional):
-If you have Python installed:
-  python -m http.server 8000
-Then open:
-  http://localhost:8000
+Clean update steps (prevents stale-cache issues)
+1) In your repo, DELETE old files (especially index.html, app.js, styles.css, manifest.json, /models/)
+2) Upload ALL files from this package into repo ROOT
+3) Commit changes
+4) Hard refresh:
+   - Windows: Ctrl + Shift + R
+   - Mac: Cmd + Shift + R
+   - Or open in Incognito
 
-ADD ANOTHER PRODUCT (.glb):
-1) Put your new .glb into /models (example: new-product.glb)
-2) Edit /models/models.json and add an entry.
+Quick verification (use your live Pages URL)
+- /manifest.json?v=v15  → should show "version": "v15"
+- /models/models.json?v=v15 → should list 3 items
+- Footer should show: Demo v15 • Build 2026-01-07
 
-Example entry:
+Adding a new 3D model
+1) Put the .glb file in /models/
+2) Add a new entry in /models/models.json with the correct "src": "models/your-file.glb"
+3) Commit and refresh
 
-{
-  "id": "new-product",
-  "title": "Contempra Post (Sample)",
-  "subtitle": "42\" guard post • Side-mount",
-  "description": "Short description for the demo.",
-  "category": "Railings",
-  "sku": "IW-CP-042",
-  "material": "Steel",
-  "finish": "Matte black powder coat",
-  "dimensions": "2-5/8\" square • 42\" high",
-  "weight": "—",
-  "lead_time": "—",
-  "price_note": "Call for pricing",
-  "tags": ["guard", "matte-black", "side-mount"],
-  "highlights": [
-    "Clean modern profile",
-    "Side-mount plates available",
-    "Meets typical guard heights (verify site conditions)"
-  ],
-  "downloads": [
-    { "label": "Spec Sheet (PDF)", "href": "assets/specs/iw-cp-042.pdf" },
-    { "label": "Install Notes (PDF)", "href": "assets/specs/iw-install.pdf" }
-  ],
-  "images": [
-    "assets/photos/iw-cp-042-1.jpg",
-    "assets/photos/iw-cp-042-2.jpg"
-  ],
-  "src": "models/new-product.glb",
-  "updated": "2026-01-07"
-}
+Zoho CRM hookup (optional)
+- Use Zoho Flow incoming webhook, then Flow → Zoho CRM "Create Record".
+- In Estimate Builder page, set webhook URL via Zoho Setup, then Send to Zoho CRM.
 
-SHARE LINKS:
-- Click the Share pill (top of the library) to copy a link.
-- Links look like: https://your-site/?id=new-product
-  (so someone at work can open directly to a specific product)
-
-
-TROUBLESHOOT:
-- If buttons don't work, ensure app.js uploaded and hard refresh (Ctrl+Shift+R).
-- If running locally by double-clicking index.html, fetch() will fail; run a local server (python -m http.server).

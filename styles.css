@@ -1,4 +1,4 @@
-/* Ironwood 3D Product Demo • v14 • 2026-01-06 */
+/* Ironwood 3D Product Demo • v15 • 2026-01-07 */
 :root{
   --bg:#0b0b0d;
   --panel:#111217;
@@ -388,7 +388,7 @@ model-viewer{
 .toast.show{ opacity: 1; }
 /* === End Product Detail Extensions === */
 
-/* === Visual Polish v3 === */
+/* === Visual Polish === */
 .card{
   position:relative;
 }
@@ -448,9 +448,9 @@ model-viewer{
   min-height: 60vh;
   height: 100%;
 }
-/* === End Visual Polish v3 === */
+/* === End Visual Polish === */
 
-/* === Presentation Mode v5 === */
+/* === Presentation Mode === */
 .present .utility,
 .present .nav,
 .present .hero,
@@ -479,11 +479,11 @@ model-viewer{
   .present .grid{ grid-template-columns: 1fr; height: auto; }
   .present model-viewer{ min-height: 60vh; }
 }
-/* === End Presentation Mode v5 === */
+/* === End Presentation Mode === */
 
 
 
-/* === Versioning v9 === */
+/* === Versioning === */
 #diagDetails {
   border: 1px solid rgba(255,255,255,.08);
   background: rgba(0,0,0,.12);
@@ -497,9 +497,9 @@ model-viewer{
 #diagDetails summary::-webkit-details-marker {
   display:none;
 }
-/* === End Versioning v9 === */
+/* === End Versioning === */
 
-/* === Auto Theme (prefers-color-scheme) v11 === */
+/* === Auto Theme (prefers-color-scheme) === */
 /* Make native form controls match the theme and stay readable */
 :root{
   /* Default: dark (matches current demo look) */
@@ -556,9 +556,9 @@ select option {
 .select {
   -webkit-text-fill-color: var(--inputText);
 }
-/* === End Auto Theme v11 === */
+/* === End Auto Theme === */
 
-/* === Print Layout (Estimate Builder) v11 === */
+/* === Print Layout (Estimate Builder) === */
 /* Print-friendly estimate sheet */
 .print-area{ display:none; }
 
@@ -660,9 +660,9 @@ select option {
     padding-top: 8px;
   }
 }
-/* === End Print Layout v11 === */
+/* === End Print Layout === */
 
-/* === Scope Templates UI v12 === */
+/* === Scope Templates UI === */
 .scopebar{
   width: 100%;
   display:flex;
@@ -692,5 +692,5 @@ select option {
   font-size: 12px;
   margin: 2px 0 8px;
 }
-/* === End Scope Templates UI v12 === */
+/* === End Scope Templates UI === */
 

@@ -1,5 +1,5 @@
-/* Ironwood 3D Product Demo • Estimate Builder • v14 • 2026-01-06 */
-const VERSION = "v14";
+/* Ironwood 3D Product Demo • Estimate Builder • v15 • 2026-01-07 */
+const VERSION = "v15";
 const BUILD_DATE = "2026-01-07";
 const STORAGE_KEY = "ironwood_demo_estimate_v1";
 

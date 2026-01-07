@@ -1,40 +1,44 @@
 {
   "name": "Ironwood 3D Product Demo",
-  "version": "v14",
+  "version": "v15",
   "build_date_local": "2026-01-07",
-  "generated_at_utc": "2026-01-07T23:01:42Z",
+  "generated_at_utc": "2026-01-07T23:10:05Z",
   "files": {
     "README.txt": {
-      "sha256": "2a8ca19c18e08306cc126f2c652694f0531bb8e3f14e06650388696e39e7c057",
-      "bytes": 2247
+      "sha256": "ff12e6006a453e13e86fdf2920b43646449c005b8337fb2e26ef253fa9a734f5",
+      "bytes": 1583
+    },
+    "VERSION.txt": {
+      "sha256": "c135a47814c1f7dd8eef8ebeceb8a34878e9c7e25b5e3de3f609d2ef2a33513f",
+      "bytes": 17
     },
     "app.js": {
-      "sha256": "ac672c20aa97c03ce29871c6b30e852423dc53404105aa4dfdad4bd8feca661c",
-      "bytes": 16525
+      "sha256": "2aec8472b297f52fae50f5eb37723ebaecabfac49f5e5688f8f2277ffc5b1cdf",
+      "bytes": 16595
     },
     "estimate.html": {
-      "sha256": "9d62e7f243dc0bb88cb4b72ee4a861a73506a8e09cf5d83219f6a72bc90f6167",
+      "sha256": "1580ee80a48a912ef55ca029daff3352fb201b7a4ccbcacf5c94ac080bfa22fd",
       "bytes": 9576
     },
     "estimate.js": {
-      "sha256": "ba33d159399698ed744b741569f1de7aaf7080da80785dc75bc252be5fdabf9b",
+      "sha256": "585a1df4e9dbe108e01241398ccce06716152abff3a4df16104c63e5f6fc355e",
       "bytes": 25657
     },
     "estimate_catalog.json": {
-      "sha256": "7a460d6d07d739356963cf9598898e2f2b32526bc728bad8ad2a5135c09e7f11",
+      "sha256": "e8335f8ffd1d7750c03c207e5a91273c17ddbbe83b5d2a3ce5c7d4c014513f1f",
       "bytes": 1688
     },
     "estimate_scopes.json": {
-      "sha256": "f8e16d3fd64ef68673fee12cbf05b4197869241c1612729be7232858905400eb",
+      "sha256": "9625d6512b24065484517b103ae110fb609245af42d45218e17706ca73c3e99b",
       "bytes": 16068
     },
     "index.html": {
-      "sha256": "3b626d75583e3b459485463952f7d5e0ae927ceb63d86f2ea545f6ab0d9b8f01",
+      "sha256": "da778ce3cce2c71109a2a238f94cd840eacf13c60e3e148ddd57d6aa312640c8",
       "bytes": 8137
     },
     "manifest.json": {
-      "sha256": "817f2bc622a0179352ae807f45fe7f0b8aa691fc6e00711e95a3bb06fef16b62",
-      "bytes": 1796
+      "sha256": "2b391aa5c0f76c1d88ba99c8a524f95750f4dde8e1f763b1cd144451ff87333b",
+      "bytes": 1956
     },
     "models/ball-top.glb": {
       "sha256": "52375b881882fb40fe5fa3ff3d7cdf35b260ce953d2e14cc3c0eab7b61fed24d",
@@ -53,8 +57,8 @@
       "bytes": 2962
     },
     "styles.css": {
-      "sha256": "89568d0168939c8d873771a4e20127ba3feac559ed70ab4ef89823f0733425fc",
-      "bytes": 16413
+      "sha256": "cf30c1c3ce911a4585f1bec2e3ee33aca54c24b290635e0d9aad15f726865c79",
+      "bytes": 16371
     }
   }
 }

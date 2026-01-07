@@ -1,6 +1,9 @@
-/* Ironwood 3D Product Demo • v14 • 2026-01-06 */
+/* Ironwood 3D Product Demo • v15 • 2026-01-07 */
+const VERSION = "v15";
+const BUILD_DATE = "2026-01-07";
+
 async function loadModels(){
-  const res = await fetch("./models/models.json?v=v14", { cache: "no-store" });
+  const res = await fetch(`./models/models.json?v=${VERSION}`, { cache: "no-store" });
   if(!res.ok) throw new Error("Could not load models/models.json");
   return await res.json();
 }
@@ -457,17 +460,17 @@ wireViewerControls();
 main();
 
 
-/** ===== Version + Diagnostics (v9) ===== */
+/** ===== Version + Diagnostics ===== */
 async function renderDiagnostics(){
   const versionEl = document.getElementById("demoVersion");
   const statusEl = document.getElementById("diagStatus");
   const listEl = document.getElementById("diagList");
 
-  const baseLine = `Demo v9 • Build 2026-01-06`;
+  const baseLine = `Demo ${VERSION} • Build ${BUILD_DATE}`;
   if(versionEl) versionEl.textContent = baseLine;
 
   try{
-    const res = await fetch(`./manifest.json?v=v14`, { cache: "no-store" });
+    const res = await fetch(`./manifest.json?v=v15`, { cache: "no-store" });
     if(!res.ok) throw new Error("manifest.json fetch failed");
     const manifest = await res.json();
 
@@ -482,7 +485,7 @@ async function renderDiagnostics(){
     const lines = [];
     for(const [path, meta] of entries){
       try{
-        const r = await fetch(`./${path}?v=v14`, { method: "GET", cache: "no-store" });
+        const r = await fetch(`./${path}?v=v15`, { method: "GET", cache: "no-store" });
         const good = r.ok;
         if(good) ok++;
         lines.push(`${good ? "✅" : "❌"} ${path}  (${meta.bytes} bytes)`);
