@@ -61,6 +61,7 @@ function renderChips(model){
   const parts = [
     model.category ? {k:"Category", v:model.category} : null,
     model.sku ? {k:"SKU", v:model.sku} : null,
+    model.material ? {k:"Material", v:model.material} : null,
     model.updated ? {k:"Updated", v:model.updated} : null,
   ].filter(Boolean);
 
@@ -82,6 +83,7 @@ function renderKV(model){
   kv.innerHTML = "";
 
   const rows = [
+    ["Profile", model.profile],
     ["Material", model.material],
     ["Finish", model.finish],
     ["Dimensions", model.dimensions],
@@ -192,7 +194,7 @@ function setViewer(model){
 function buildListItem(m, idx){
   const id = modelId(m, idx);
   const top = m.title || `Model ${idx+1}`;
-  const sub = [m.category, m.sku].filter(Boolean).join(" • ");
+  const sub = [m.category, m.material, m.sku].filter(Boolean).join(" • ");
   const desc = m.description || "";
 
   return el("div", { class:"item", "data-id": id }, [
@@ -350,6 +352,15 @@ async function main(){
   document.getElementById("btnFit").addEventListener("click", ()=>{
     try { mv.jumpCameraToGoal(); } catch(e) {}
   });
+
+  // Fullscreen (presentation-friendly)
+  const btnFull = document.getElementById("btnFull");
+  if(btnFull){
+    btnFull.addEventListener("click", ()=>{
+      document.body.classList.toggle("fullscreen");
+      btnFull.textContent = document.body.classList.contains("fullscreen") ? "Exit Fullscreen" : "Fullscreen";
+    });
+  }
 
   // Share control: click the "Share" pill anywhere to copy link
   const sharePill = document.querySelector(".searchbar .pill");

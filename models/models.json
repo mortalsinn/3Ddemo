@@ -1,22 +1,25 @@
 [
   {
     "id": "demo",
-    "title": "Demo Model",
-    "description": "Uploaded from Polycam (.glb). Rotate, zoom, and inspect details.",
+    "title": "2 1/2\" Railing Profile",
+    "description": "Railing profile scan for internal review. Rotate / zoom to inspect the profile shape and edges.",
     "src": "models/ironwood-demo.glb",
-    "subtitle": "Polycam scan \u2022 GLB",
-    "category": "Prototype / Demo",
+    "subtitle": "Flat bottom \u2022 Red oak \u2022 Polycam GLB",
+    "category": "Railing Profiles",
     "sku": "IW-DEMO-001",
-    "material": "\u2014",
-    "finish": "\u2014",
-    "dimensions": "\u2014",
+    "material": "Red Oak",
+    "finish": "Unfinished (demo)",
+    "dimensions": "2 1/2\" profile width",
     "weight": "\u2014",
     "lead_time": "\u2014",
     "price_note": "Internal demo only",
     "tags": [
       "3D",
+      "Demo",
       "Polycam",
-      "Demo"
+      "flat-bottom",
+      "profile",
+      "red-oak"
     ],
     "highlights": [
       "Rotate / zoom / pan in-browser",
@@ -34,6 +37,7 @@
       }
     ],
     "images": [],
-    "updated": "2026-01-07"
+    "updated": "2026-01-06",
+    "profile": "2 1/2\" c/w Flat Bottom"
   }
 ]
