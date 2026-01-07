@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ironwood Estimate Builder (Demo)</title>
+
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <link rel="stylesheet" href="./styles.css?v=v10" />
+</head>
+<body>
+
+  <div class="utility">
+    <div class="container">
+      <div class="row">
+        <div class="left">
+          <span class="pill">
+            <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4.5 8-12A8 8 0 1 0 4 10c0 7.5 8 12 8 12Z" stroke="currentColor" stroke-width="1.6"/><path d="M12 13.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Z" stroke="currentColor" stroke-width="1.6"/></svg>
+            Calgary & Area
+          </span>
+          <span class="pill">Internal Demo</span>
+        </div>
+        <div class="right">
+          <a class="pill" href="https://ironwoodstairs.com/make-a-payment/" target="_blank" rel="noreferrer">Make a Payment</a>
+          <a class="pill" href="https://ironwoodstairs.com/contact-us/" target="_blank" rel="noreferrer">Request A Quote</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <div class="container">
+      <div class="row">
+        <div class="brand">
+          <img src="./assets/logo.png" alt="Ironwood Stair & Rail" onerror="this.style.display='none'; document.getElementById('wordmark').style.display='block';" />
+          <div id="wordmark" style="display:none;">
+            <div class="wordmark">Ironwood Stair &amp; Rail</div>
+            <div class="sub">Estimate Builder Demo</div>
+          </div>
+        </div>
+
+        <div class="links" aria-label="Primary">
+          <a href="./index.html">3D Viewer</a>
+          <a href="./estimate.html" style="color: var(--text); background: rgba(255,255,255,.06); text-decoration:none;">Estimate Builder</a>
+          <a href="https://ironwoodstairs.com/" target="_blank" rel="noreferrer">Main Site</a>
+        </div>
+
+        <div class="cta">
+          <button class="btn" id="btnNew" type="button">New</button>
+          <button class="btn primary" id="btnPrint" type="button">Print / Save PDF</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="container">
+      <h1>Estimate Builder</h1>
+      <p>
+        Barebones quoting demo — fully client-side (no server). Build a quick estimate from a catalog, add custom lines, apply markups/tax, and export.
+      </p>
+      <div class="meta">
+        <span class="pill">Autosaves locally</span>
+        <span class="pill">Export JSON / CSV</span>
+        <span class="pill">Share link (demo)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="container">
+      <div class="grid" style="grid-template-columns: 420px 1fr;">
+
+        <div class="card">
+          <div class="hd">
+            <div class="title">Estimate Details <span id="estNo" style="font-weight:700; color: rgba(255,255,255,.65);"></span></div>
+            <div class="subtitle">This is a demo shell — replace pricing rules later with your real logic.</div>
+          </div>
+
+          <div class="list" style="gap:10px;">
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+              <div>
+                <div class="section-title">Client</div>
+                <input class="input" id="clientName" placeholder="Client name" />
+              </div>
+              <div>
+                <div class="section-title">Project</div>
+                <input class="input" id="projectName" placeholder="Project name" />
+              </div>
+            </div>
+
+            <div>
+              <div class="section-title">Site / Address</div>
+              <input class="input" id="siteAddress" placeholder="Address (optional)" />
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+              <div>
+                <div class="section-title">Date</div>
+                <input class="input" id="estDate" type="date" />
+              </div>
+              <div>
+                <div class="section-title">Valid for</div>
+                <select class="select" id="validDays">
+                  <option value="14">14 days</option>
+                  <option value="30" selected>30 days</option>
+                  <option value="60">60 days</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <div class="section-title">Notes</div>
+              <textarea class="input" id="notes" rows="4" placeholder="Internal demo notes / scope notes…"></textarea>
+            </div>
+
+            <div class="section-title" style="margin-top:6px;">Settings</div>
+            <div class="kv">
+              <div class="k">Markup %</div>
+              <div class="v"><input class="input" id="markupPct" type="number" step="0.1" value="0" /></div>
+
+              <div class="k">Discount $</div>
+              <div class="v"><input class="input" id="discountAmt" type="number" step="0.01" value="0" /></div>
+
+              <div class="k">Tax %</div>
+              <div class="v"><input class="input" id="taxPct" type="number" step="0.1" value="5" /></div>
+            </div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button class="btn" id="btnSave" type="button">Save</button>
+              <button class="btn" id="btnShare" type="button">Copy Share Link</button>
+              <button class="btn" id="btnExportJson" type="button">Export JSON</button>
+              <button class="btn" id="btnExportCsv" type="button">Export CSV</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card viewer-wrap" style="min-height: 560px;">
+          <div class="viewer-top">
+            <div class="left">
+              <div class="big">Line Items</div>
+              <div class="small">Add catalog items (demo pricing) or custom lines. Totals update live.</div>
+            </div>
+            <div class="controls">
+              <button class="btn" id="btnAddCatalog" type="button">Add From Catalog</button>
+              <button class="btn" id="btnAddCustom" type="button">Add Custom Line</button>
+              <button class="btn primary" id="btnClearLines" type="button">Clear Lines</button>
+            </div>
+          </div>
+
+          <div class="detail" style="border-top: none;">
+            <div id="lines"></div>
+
+            <div class="detail-grid" style="grid-template-columns: 1fr .75fr;">
+              <div>
+                <div class="section-title">Terms / Disclaimers (demo)</div>
+                <ul class="bullets" id="terms">
+                  <li>Pricing and specifications shown are for demo purposes only.</li>
+                  <li>Final scope, site measurements, and code requirements to be confirmed on site.</li>
+                  <li>Finishes, materials, and lead times subject to availability.</li>
+                </ul>
+              </div>
+
+              <div>
+                <div class="section-title">Totals</div>
+                <div class="kv" id="totals"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="container">
+      <div class="row">
+        <div>
+          <strong>Ironwood Stair &amp; Rail Inc.</strong><br/>
+          108-239 Mayland Pl NE, Calgary, AB T2E 7Z8
+        </div>
+        <div>
+          (403) 552-1007<br/>
+          <a href="mailto:info@ironwoodstairs.com">info@ironwoodstairs.com</a>
+        </div>
+        <div>
+          © <span id="yr"></span> — internal demo page<br/>
+          <span id="demoVersion" style="color: rgba(255,255,255,.65);"></span>
+
+          <details id="diagDetails" style="margin-top:10px; max-width: 520px;">
+            <summary style="cursor:pointer; color: rgba(255,255,255,.75);">Diagnostics</summary>
+            <div style="margin-top:10px; display:flex; flex-direction:column; gap:8px;">
+              <div id="diagStatus" style="color: rgba(255,255,255,.65);">Loading…</div>
+              <div id="diagList" style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; font-size:12px; color: rgba(255,255,255,.65);"></div>
+            </div>
+          </details>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast">Copied link</div>
+
+  <script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+  <script src="./estimate.js?v=v10"></script>
+</body>
+</html>
