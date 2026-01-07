@@ -3,6 +3,37 @@
     "id": "demo",
     "title": "Demo Model",
     "description": "Uploaded from Polycam (.glb). Rotate, zoom, and inspect details.",
-    "src": "models/ironwood-demo.glb"
+    "src": "models/ironwood-demo.glb",
+    "subtitle": "Polycam scan \u2022 GLB",
+    "category": "Prototype / Demo",
+    "sku": "IW-DEMO-001",
+    "material": "\u2014",
+    "finish": "\u2014",
+    "dimensions": "\u2014",
+    "weight": "\u2014",
+    "lead_time": "\u2014",
+    "price_note": "Internal demo only",
+    "tags": [
+      "3D",
+      "Polycam",
+      "Demo"
+    ],
+    "highlights": [
+      "Rotate / zoom / pan in-browser",
+      "Fast, single-file .GLB export",
+      "Easy to add more products via models.json"
+    ],
+    "downloads": [
+      {
+        "label": "Spec Sheet (PDF)",
+        "href": ""
+      },
+      {
+        "label": "Install Notes (PDF)",
+        "href": ""
+      }
+    ],
+    "images": [],
+    "updated": "2026-01-07"
   }
 ]
