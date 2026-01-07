@@ -1,0 +1,8 @@
+[
+  {
+    "id": "demo",
+    "title": "Demo Model",
+    "description": "Uploaded from Polycam (.glb). Rotate, zoom, and inspect details.",
+    "src": "models/ironwood-demo.glb"
+  }
+]

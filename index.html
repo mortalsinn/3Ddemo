@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ironwood 3D Product Demo</title>
+
+  <!-- model-viewer (simple, web-native 3D viewer) -->
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+
+  <!-- Utility bar (mirrors the "Make a Payment / Request A Quote" style area from the main site) -->
+  <div class="utility">
+    <div class="container">
+      <div class="row">
+        <div class="left">
+          <span class="pill">
+            <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4.5 8-12A8 8 0 1 0 4 10c0 7.5 8 12 8 12Z" stroke="currentColor" stroke-width="1.6"/><path d="M12 13.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Z" stroke="currentColor" stroke-width="1.6"/></svg>
+            Calgary & Area
+          </span>
+          <span class="pill">Internal Demo</span>
+        </div>
+        <div class="right">
+          <a class="pill" href="https://ironwoodstairs.com/make-a-payment/" target="_blank" rel="noreferrer">Make a Payment</a>
+          <a class="pill" href="https://ironwoodstairs.com/contact-us/" target="_blank" rel="noreferrer">Request A Quote</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sticky nav -->
+  <div class="nav">
+    <div class="container">
+      <div class="row">
+        <div class="brand">
+          <!-- Optional: if you drop a logo file at /assets/logo.png it will show.
+               If not, this falls back to the wordmark text. -->
+          <img src="./assets/logo.png" alt="Ironwood Stair & Rail" onerror="this.style.display='none'; document.getElementById('wordmark').style.display='block';" />
+          <div id="wordmark" style="display:none;">
+            <div class="wordmark">Ironwood Stair &amp; Rail</div>
+            <div class="sub">3D Product Demo</div>
+          </div>
+        </div>
+
+        <div class="links" aria-label="Primary">
+          <a href="https://ironwoodstairs.com/" target="_blank" rel="noreferrer">Home</a>
+          <a href="https://ironwoodstairs.com/custom-stairs/" target="_blank" rel="noreferrer">Stairs</a>
+          <a href="https://ironwoodstairs.com/railings/" target="_blank" rel="noreferrer">Railings</a>
+          <a href="https://ironwoodstairs.com/trade-talk/" target="_blank" rel="noreferrer">Trade Talk</a>
+          <a href="https://ironwoodstairs.com/about/who-we-are/" target="_blank" rel="noreferrer">About</a>
+          <a href="https://ironwoodstairs.com/contact-us/" target="_blank" rel="noreferrer">Contact</a>
+        </div>
+
+        <div class="cta">
+          <a class="btn" href="https://ironwoodstairs.com/" target="_blank" rel="noreferrer">View Main Site</a>
+          <a class="btn primary" href="https://ironwoodstairs.com/contact-us/" target="_blank" rel="noreferrer">Request A Quote</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="container">
+      <h1>3D Product Viewer</h1>
+      <p>
+        Rotate, zoom, and inspect your products directly in the browser.
+        This page is designed as a lightweight demo you can drag-and-drop onto free hosting (Netlify Drop / GitHub Pages).
+      </p>
+      <div class="meta">
+        <span class="pill">Tip: drag to rotate</span>
+        <span class="pill">Scroll / pinch to zoom</span>
+        <span class="pill">Shift + drag to pan</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+    <div class="container">
+      <div class="grid">
+
+        <!-- Left: model list -->
+        <div class="card">
+          <div class="hd">
+            <div class="title">Model Library</div>
+            <div class="subtitle">Add more .glb files any time — just update <strong>models/models.json</strong>.</div>
+          </div>
+          <div id="modelList" class="list"></div>
+        </div>
+
+        <!-- Right: viewer -->
+        <div class="card viewer-wrap">
+          <div class="viewer-top">
+            <div class="left">
+              <div id="modelTitle" class="big">Loading…</div>
+              <div id="modelDesc" class="small"></div>
+            </div>
+            <div class="controls">
+              <button class="btn" id="btnReset" type="button">Reset</button>
+              <button class="btn" id="btnFit" type="button">Fit</button>
+              <button class="btn primary" id="btnAuto" type="button">Stop Rotate</button>
+            </div>
+          </div>
+
+          <model-viewer
+            id="mv"
+            src="./models/ironwood-demo.glb"
+            camera-controls
+            auto-rotate
+            auto-rotate-delay="1200"
+            rotation-per-second="18deg"
+            shadow-intensity="0.85"
+            exposure="1.12"
+            environment-image="neutral"
+            interaction-prompt="none"
+            touch-action="pan-y"
+            min-camera-orbit="auto auto 0.15m"
+            max-camera-orbit="auto auto 10m"
+          ></model-viewer>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="container">
+      <div class="row">
+        <div>
+          <strong>Ironwood Stair &amp; Rail Inc.</strong><br/>
+          108-239 Mayland Pl NE, Calgary, AB T2E 7Z8
+        </div>
+        <div>
+          (403) 552-1007<br/>
+          <a href="mailto:info@ironwoodstairs.com">info@ironwoodstairs.com</a>
+        </div>
+        <div>
+          © <span id="yr"></span> — internal demo page
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+  <script src="./app.js"></script>
+</body>
+</html>
