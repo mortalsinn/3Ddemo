@@ -1,0 +1,599 @@
+{
+  "version": "v12",
+  "currency": "CAD",
+  "base_terms": [
+    "Pricing and specifications shown are for demo purposes only.",
+    "Final scope, site measurements, and code requirements to be confirmed on site.",
+    "Finishes, materials, and lead times subject to availability."
+  ],
+  "templates": [
+    {
+      "id": "stairs_custom",
+      "name": "Custom Stairs",
+      "group": "Stairs",
+      "summary": "Hardwood treads/risers, fascia/stringer finish, landings, install.",
+      "defaults": {
+        "markup_pct": 0,
+        "tax_pct": 5
+      },
+      "notes": "Custom stairs scope (demo): confirm species, stain/clear, landing framing by others, and site conditions.",
+      "terms": [
+        "Species, stain match, and finish system to be confirmed prior to production.",
+        "Landings and blocking by others unless specifically included."
+      ],
+      "lines": [
+        {
+          "name": "Site Measure / Stair Review",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Shop Drawings / Layout Confirmation",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Hardwood Treads (Closed Rise)",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": "Enter stair count or convert to rise count later"
+        },
+        {
+          "name": "Hardwood Risers",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Stringer Fascia / Skirt Boards",
+          "qty": 1,
+          "unit": "lf",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Landing Finish (Hardwood / Veneer / Plywood)",
+          "qty": 1,
+          "unit": "sf",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Install Labor (Stairs)",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Protection + Cleanup",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "stairs_spiral",
+      "name": "Spiral Staircases",
+      "group": "Stairs",
+      "summary": "Spiral package, drawings, guard/handrail, install.",
+      "defaults": {
+        "markup_pct": 0,
+        "tax_pct": 5
+      },
+      "notes": "Spiral scope (demo): confirm diameter, floor-to-floor, headroom, and attachment points.",
+      "terms": [
+        "Final dimensions and attachment points to be verified on site prior to ordering."
+      ],
+      "lines": [
+        {
+          "name": "Spiral Staircase Package",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": "Specify diameter / rise count"
+        },
+        {
+          "name": "Shop Drawings / Engineering (as required)",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Spiral Guard / Handrail",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": "Material/spec TBD"
+        },
+        {
+          "name": "Delivery / Handling",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Install Labor (Spiral)",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "stairs_construction",
+      "name": "Construction Stairs",
+      "group": "Stairs",
+      "summary": "Plywood/framers stair package, caps, wall rails, install.",
+      "defaults": {
+        "markup_pct": 0,
+        "tax_pct": 5
+      },
+      "notes": "Construction stairs scope (demo): confirm rise/run, stair width, landing framing, and site schedule.",
+      "terms": [
+        "Landings/framing by others unless noted.",
+        "Final rise/run and stair geometry to be verified during site measure."
+      ],
+      "lines": [
+        {
+          "name": "Site Measure / Framing Verification",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Plywood Construction Grade Stair (Supply)",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": "Enter rise count / width"
+        },
+        {
+          "name": "Install Labor (Construction Stair)",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Stringer Caps / Header Fascia (as required)",
+          "qty": 1,
+          "unit": "lf",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Wall Handrail (Graspable)",
+          "qty": 1,
+          "unit": "lf",
+          "unit_price": 0,
+          "note": "Code rail where required"
+        },
+        {
+          "name": "Site Protection + Cleanup",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "railings_wood",
+      "name": "Wood Railings",
+      "group": "Railings",
+      "summary": "Posts, top/bottom rail, spindles, install.",
+      "defaults": {
+        "markup_pct": 0,
+        "tax_pct": 5
+      },
+      "notes": "Wood railings scope (demo): confirm style (modern/traditional), post sizes, spindle spacing, and finish responsibility.",
+      "terms": [
+        "Finish (paint/stain) by others unless specifically included.",
+        "Spindle spacing and guard height to meet applicable code."
+      ],
+      "lines": [
+        {
+          "name": "Site Measure / Railing Review",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Newel Posts (Wood)",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": "Enter post count"
+        },
+        {
+          "name": "Top Rail (Wood)",
+          "qty": 1,
+          "unit": "lf",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Bottom Rail (Wood)",
+          "qty": 1,
+          "unit": "lf",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Spindles / Balusters",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": "Enter spindle count"
+        },
+        {
+          "name": "Handrail Returns / Transitions (as required)",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Install Labor (Wood Railings)",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "railings_glass",
+      "name": "Glass Railings",
+      "group": "Railings",
+      "summary": "Tempered glass panels, hardware/base shoe, install.",
+      "defaults": {
+        "markup_pct": 0,
+        "tax_pct": 5
+      },
+      "notes": "Glass railings scope (demo): confirm mounting (shoe vs clamps), glass thickness, and top rail requirements.",
+      "terms": [
+        "Tempered glass sizing is based on final site verification.",
+        "Glass lead times may vary; schedule to be confirmed at order."
+      ],
+      "lines": [
+        {
+          "name": "Site Measure / Glass Layout",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Tempered Glass Panels",
+          "qty": 1,
+          "unit": "sf",
+          "unit_price": 0,
+          "note": "Enter total glass area"
+        },
+        {
+          "name": "Base Shoe / Mounting Hardware",
+          "qty": 1,
+          "unit": "lf",
+          "unit_price": 0,
+          "note": "Or clamps/standoffs"
+        },
+        {
+          "name": "Top Rail / Cap Rail (as required)",
+          "qty": 1,
+          "unit": "lf",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Install Labor (Glass Railings)",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Sealant + Site Protection",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "railings_wrought_iron",
+      "name": "Wrought Iron Railings",
+      "group": "Railings",
+      "summary": "Welded/ornamental iron, powder coat, install.",
+      "defaults": {
+        "markup_pct": 0,
+        "tax_pct": 5
+      },
+      "notes": "Wrought iron scope (demo): confirm design, post locations, finish, and mounting style (top/side mount).",
+      "terms": [
+        "Final design/ornamentation to be approved prior to fabrication.",
+        "Powder coat color to be selected from available options."
+      ],
+      "lines": [
+        {
+          "name": "Site Measure / Railing Review",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Welded Wrought Iron Panels / Sections",
+          "qty": 1,
+          "unit": "lf",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Posts + Mounting Plates/Hardware",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": "Enter post count"
+        },
+        {
+          "name": "Powder Coat Finish",
+          "qty": 1,
+          "unit": "lf",
+          "unit_price": 0,
+          "note": "Color TBD"
+        },
+        {
+          "name": "Install Labor (Metal Railings)",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "railings_stainless",
+      "name": "Stainless Steel Railings",
+      "group": "Railings",
+      "summary": "Stainless posts/rails, infill options, install.",
+      "defaults": {
+        "markup_pct": 0,
+        "tax_pct": 5
+      },
+      "notes": "Stainless scope (demo): confirm grade/finish, infill type (bars/cable/glass), and mounting style.",
+      "terms": [
+        "Stainless finish/grade to be confirmed prior to production."
+      ],
+      "lines": [
+        {
+          "name": "Site Measure / Layout",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Stainless Posts",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Stainless Top Rail",
+          "qty": 1,
+          "unit": "lf",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Infill (Bars/Cable/Glass)",
+          "qty": 1,
+          "unit": "lf",
+          "unit_price": 0,
+          "note": "Specify infill"
+        },
+        {
+          "name": "Install Labor (Stainless Railing)",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "glass_solutions",
+      "name": "Glass Solutions (Walls / Showers / Wine Rooms)",
+      "group": "Glass Solutions",
+      "summary": "High-end interior glass packages: walls, shower enclosures, wine rooms, mirrors.",
+      "defaults": {
+        "markup_pct": 0,
+        "tax_pct": 5
+      },
+      "notes": "Glass Solutions scope (demo): confirm opening sizes, hardware finish, and site conditions.",
+      "terms": [
+        "Final glass dimensions and hardware selections to be verified on site.",
+        "Lead times vary by hardware and glass type."
+      ],
+      "lines": [
+        {
+          "name": "Site Measure / Glass Review",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Glass Wall System (Interior)",
+          "qty": 1,
+          "unit": "sf",
+          "unit_price": 0,
+          "note": "Optional"
+        },
+        {
+          "name": "Shower Enclosure (Frameless / Semi-Frameless)",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": "Optional"
+        },
+        {
+          "name": "Wine Room Glass + Door Package",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": "Optional"
+        },
+        {
+          "name": "Mirrors (Supply + Install)",
+          "qty": 1,
+          "unit": "sf",
+          "unit_price": 0,
+          "note": "Optional"
+        },
+        {
+          "name": "Install Labor (Glass Solutions)",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "metalcraft_welded_rail",
+      "name": "MetalCraft (Welded Railings / Custom Metal)",
+      "group": "MetalCraft",
+      "summary": "Welded railings, decorative panels, custom metal features.",
+      "defaults": {
+        "markup_pct": 0,
+        "tax_pct": 5
+      },
+      "notes": "MetalCraft scope (demo): confirm design intent, powder coat, and mounting conditions.",
+      "terms": [
+        "Final shop drawings/design approvals required prior to fabrication.",
+        "Powder coat color to be selected from available options."
+      ],
+      "lines": [
+        {
+          "name": "Site Measure / Design Review",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Welded Metal Railing (Custom)",
+          "qty": 1,
+          "unit": "lf",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Decorative Metal Panels (Optional)",
+          "qty": 1,
+          "unit": "sf",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Powder Coat Finish",
+          "qty": 1,
+          "unit": "lf",
+          "unit_price": 0,
+          "note": "Color TBD"
+        },
+        {
+          "name": "Install Labor (MetalCraft)",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "package_new_build_stair_rail",
+      "name": "New Build Package (Stairs + Railings)",
+      "group": "Packages",
+      "summary": "Construction stair + railing package (easy internal demo bundle).",
+      "defaults": {
+        "markup_pct": 0,
+        "tax_pct": 5
+      },
+      "notes": "Package scope (demo): confirm stair geometry, railing lengths, spec selection, and install timeline.",
+      "terms": [
+        "Scope assumes typical new-build sequencing; schedule to be confirmed.",
+        "Change orders apply for scope changes after approval."
+      ],
+      "lines": [
+        {
+          "name": "Site Measure / Package Review",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Plywood Construction Grade Stair (Supply)",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Install Labor (Stair)",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Guard Railing (Specify: Wood / Glass / Metal)",
+          "qty": 1,
+          "unit": "lf",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Wall Handrail (Graspable)",
+          "qty": 1,
+          "unit": "lf",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Install Labor (Railings)",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        },
+        {
+          "name": "Project Coordination + Closeout",
+          "qty": 1,
+          "unit": "ea",
+          "unit_price": 0,
+          "note": ""
+        }
+      ]
+    }
+  ]
+}

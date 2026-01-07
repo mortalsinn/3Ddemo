@@ -1,5 +1,5 @@
-/* Ironwood 3D Product Demo • Estimate Builder • v11 • 2026-01-06 */
-const VERSION = "v11";
+/* Ironwood 3D Product Demo • Estimate Builder • v12 • 2026-01-06 */
+const VERSION = "v12";
 const BUILD_DATE = "2026-01-06";
 const STORAGE_KEY = "ironwood_demo_estimate_v1";
 
@@ -28,6 +28,25 @@ function nowISODate(){
   const d = new Date();
   const pad = (v)=> String(v).padStart(2, "0");
   return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+}
+
+
+async function loadScopes(){
+  const res = await fetch(`./estimate_scopes.json?v=${VERSION}`, { cache: "no-store" });
+  if(!res.ok) throw new Error("Could not load estimate_scopes.json");
+  return await res.json();
+}
+
+function renderTerms(baseTerms, scopeTerms){
+  const ul = $("terms");
+  if(!ul) return;
+  ul.innerHTML = "";
+  const all = [...(baseTerms||[]), ...(scopeTerms||[])];
+  for(const t of all){
+    const li = document.createElement("li");
+    li.textContent = t;
+    ul.appendChild(li);
+  }
 }
 
 async function loadCatalog(){
@@ -418,6 +437,100 @@ async function main(){
   setUIFromState(state);
 
   const catalog = await loadCatalog();
+
+  const scopes = await loadScopes();
+  const scopeSelect = $("scopeSelect");
+  const scopeHint = $("scopeHint");
+  const scopeApplyDefaults = $("scopeApplyDefaults");
+
+  const templates = (scopes.templates || []).slice().sort((a,b)=>{
+    const ga = a.group || "";
+    const gb = b.group || "";
+    if(ga !== gb) return ga.localeCompare(gb);
+    return (a.name || "").localeCompare(b.name || "");
+  });
+  const byId = Object.fromEntries(templates.map(t=> [t.id, t]));
+
+  if(scopeSelect){
+    scopeSelect.innerHTML =
+      `<option value="">Select scope…</option>` +
+      templates.map(t=> `<option value="${t.id}">${t.group ? `${t.group} — ` : ""}${t.name}</option>`).join("");
+  }
+
+  function updateScopeHint(){
+    if(!scopeHint) return;
+    const id = scopeSelect?.value || "";
+    const t = byId[id];
+    if(!t){
+      scopeHint.textContent = "Pick a scope template to quickly populate line items.";
+      renderTerms(scopes.base_terms, []);
+      return;
+    }
+    const count = (t.lines || []).length;
+    scopeHint.textContent = `${t.summary || ""}  •  ${count} line item${count===1 ? "" : "s"}`.trim();
+    renderTerms(scopes.base_terms, t.terms || []);
+  }
+
+  scopeSelect?.addEventListener("change", updateScopeHint);
+  updateScopeHint();
+
+  function deepCopy(x){
+    return JSON.parse(JSON.stringify(x));
+  }
+
+  function applyScope(mode){
+    const id = scopeSelect?.value || "";
+    const t = byId[id];
+    if(!t) return;
+
+    const copied = deepCopy(t.lines || []);
+    const newLines = copied.map(l=> ({
+      name: l.name || "",
+      qty: l.qty ?? 1,
+      unit_price: l.unit_price ?? 0,
+      note: l.note || ""
+    }));
+
+    // Apply suggested defaults (optional)
+    if(scopeApplyDefaults?.checked && t.defaults){
+      if(typeof t.defaults.markup_pct === "number") $("markupPct").value = String(t.defaults.markup_pct);
+      if(typeof t.defaults.discount_amt === "number") $("discountAmt").value = String(t.defaults.discount_amt);
+      if(typeof t.defaults.tax_pct === "number") $("taxPct").value = String(t.defaults.tax_pct);
+    }
+
+    // Append scope notes (optional)
+    if(t.notes && $("notes")){
+      const existing = ($("notes").value || "").trim();
+      const add = String(t.notes).trim();
+      if(add){
+        $("notes").value = existing ? `${existing}\n\n— ${t.name} —\n${add}` : `— ${t.name} —\n${add}`;
+      }
+    }
+
+    if(mode === "replace"){
+      state.lines = newLines;
+      state.scope_id = t.id;
+      state.scope_name = t.name;
+      toast(`Applied: ${t.name}`);
+    } else {
+      state.lines = [...(state.lines || []), ...newLines];
+      state.scope_id = state.scope_id || t.id;
+      state.scope_name = state.scope_name || t.name;
+      toast(`Added: ${t.name}`);
+    }
+
+    // Update terms panel for currently selected scope
+    renderTerms(scopes.base_terms, t.terms || []);
+
+    syncFromUI();
+    renderLines(state);
+  }
+
+  $("btnScopeAdd")?.addEventListener("click", ()=> applyScope("add"));
+  $("btnScopeReplace")?.addEventListener("click", ()=> {
+    const ok = window.confirm("Replace ALL existing line items with this scope template?");
+    if(ok) applyScope("replace");
+  });
 
   function syncFromUI(){
     getStateFromUI(state);

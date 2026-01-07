@@ -1,36 +1,40 @@
 {
   "name": "Ironwood 3D Product Demo",
-  "version": "v11",
+  "version": "v12",
   "build_date_local": "2026-01-06",
-  "generated_at_utc": "2026-01-07T04:05:45Z",
+  "generated_at_utc": "2026-01-07T04:17:47Z",
   "files": {
     "README.txt": {
       "sha256": "2a8ca19c18e08306cc126f2c652694f0531bb8e3f14e06650388696e39e7c057",
       "bytes": 2247
     },
     "app.js": {
-      "sha256": "5dcfdac6ebd40b3ed2bbc57b1150a39fd412acbaea9562df0bb5fec5ecc1d8aa",
+      "sha256": "0abaa3a03c371a21e693e7ff5a2acee88e2556300c421678dd8bed3bae8d9cd6",
       "bytes": 16525
     },
     "estimate.html": {
-      "sha256": "00324d8ada4f93c4abc276f9eef2ff02add0e539fca92f71185a1a964dad8528",
-      "bytes": 8765
+      "sha256": "53b950b88d843bf731d9b993a134edfb84f8a72abacb079141702521438c0f03",
+      "bytes": 9391
     },
     "estimate.js": {
-      "sha256": "09c3f8286067978f4fb9f0fb3602861711155fe79412d05c58d7ab4cdf4f2392",
-      "bytes": 16785
+      "sha256": "b1d65b6d5d0a5a02f67c224a81398be01e75c0b85e38964e327fcd70b93c0b79",
+      "bytes": 20443
     },
     "estimate_catalog.json": {
-      "sha256": "9de2171508bcbe61937a91477acd9ab1e57f83edac204bd0a1c336fb431077ba",
-      "bytes": 647
+      "sha256": "9f567acda47a68fb841d1c1d99fe11f05a0271312c2709b1e04eba87185b0afe",
+      "bytes": 1493
+    },
+    "estimate_scopes.json": {
+      "sha256": "d48c3354218bc1d292a078a32f3f7ebaf155a339dea21891cb7e861b247c6362",
+      "bytes": 16068
     },
     "index.html": {
-      "sha256": "fd9fd7627c6b71ba337f8d4e875e3b7639f231086dbe6a1e1120b124b84b6fb9",
+      "sha256": "324abc16cad301dc8f5c8ac241780c9b2e35fc8f3f1bc3a168cb190492508a11",
       "bytes": 8137
     },
     "manifest.json": {
-      "sha256": "0bf44a2939945e086c621aa123a423c6a282b17e5be56bf45f7605b22b40180e",
-      "bytes": 1653
+      "sha256": "9230c0f9fa8f7ad548da9d06f3693cfeac6733242b4097e0909291cedf6fcb10",
+      "bytes": 1796
     },
     "models/ball-top.glb": {
       "sha256": "52375b881882fb40fe5fa3ff3d7cdf35b260ce953d2e14cc3c0eab7b61fed24d",
@@ -45,8 +49,8 @@
       "bytes": 1991
     },
     "styles.css": {
-      "sha256": "1d42e88b4209698e6add7217912a10e93db35aa86ca0be4bc6ac52b3ffe855be",
-      "bytes": 15821
+      "sha256": "91de430ccd590b6912aea286389b5c51171482f2085e759e634311daed0261be",
+      "bytes": 16413
     }
   }
 }

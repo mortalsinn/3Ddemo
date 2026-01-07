@@ -1,4 +1,4 @@
-/* Ironwood 3D Product Demo • v11 • 2026-01-06 */
+/* Ironwood 3D Product Demo • v12 • 2026-01-06 */
 :root{
   --bg:#0b0b0d;
   --panel:#111217;
@@ -661,4 +661,36 @@ select option {
   }
 }
 /* === End Print Layout v11 === */
+
+/* === Scope Templates UI v12 === */
+.scopebar{
+  width: 100%;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.scopebar .select{
+  min-width: 260px;
+}
+.check{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--panel2);
+  color: var(--muted);
+  font-weight: 800;
+  font-size: 12px;
+}
+.check input{ transform: translateY(1px); }
+.scopehint{
+  color: var(--muted);
+  font-size: 12px;
+  margin: 2px 0 8px;
+}
+/* === End Scope Templates UI v12 === */
 

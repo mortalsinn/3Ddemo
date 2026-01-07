@@ -6,7 +6,7 @@
   <title>Ironwood Estimate Builder (Demo)</title>
 
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-  <link rel="stylesheet" href="./styles.css?v=v11" />
+  <link rel="stylesheet" href="./styles.css?v=v12" />
 </head>
 <body>
 
@@ -142,6 +142,18 @@
               <div class="big">Line Items</div>
               <div class="small">Add catalog items (demo pricing) or custom lines. Totals update live.</div>
             </div>
+            
+            <div class="scopebar">
+              <select class="select" id="scopeSelect" title="Scope template"></select>
+              <label class="check">
+                <input type="checkbox" id="scopeApplyDefaults" checked />
+                <span>Apply defaults</span>
+              </label>
+              <button class="btn" id="btnScopeAdd" type="button">Add Scope</button>
+              <button class="btn primary" id="btnScopeReplace" type="button">Replace Lines</button>
+            </div>
+            <div class="scopehint" id="scopeHint">Pick a scope template to quickly populate line items.</div>
+
             <div class="controls">
               <button class="btn" id="btnAddCatalog" type="button">Add From Catalog</button>
               <button class="btn" id="btnAddCustom" type="button">Add Custom Line</button>
@@ -210,6 +222,6 @@
   <div id="toast" class="toast">Copied link</div>
 
   <script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
-  <script src="./estimate.js?v=v11"></script>
+  <script src="./estimate.js?v=v12"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 {
-  "version": "v11",
+  "version": "v12",
   "currency": "CAD",
   "items": [
     {
@@ -22,6 +22,41 @@
       "unit": "ea",
       "unit_price": 0.0,
       "note": "Demo line for service items."
+    },
+    {
+      "id": "wood-railing-lf",
+      "name": "Wood Guard Railing (Supply + Install)",
+      "unit": "lf",
+      "unit_price": 0.0,
+      "note": "Demo pricing."
+    },
+    {
+      "id": "glass-railing-lf",
+      "name": "Glass Guard Railing (Supply + Install)",
+      "unit": "lf",
+      "unit_price": 0.0,
+      "note": "Demo pricing."
+    },
+    {
+      "id": "welded-metal-lf",
+      "name": "Custom Welded Metal Railing (Supply + Install)",
+      "unit": "lf",
+      "unit_price": 0.0,
+      "note": "Demo pricing."
+    },
+    {
+      "id": "wall-handrail-lf",
+      "name": "Wall Handrail (Graspable)",
+      "unit": "lf",
+      "unit_price": 0.0,
+      "note": "Demo pricing."
+    },
+    {
+      "id": "powdercoat",
+      "name": "Powder Coat Finish",
+      "unit": "ea",
+      "unit_price": 0.0,
+      "note": "Demo pricing."
     }
   ]
 }

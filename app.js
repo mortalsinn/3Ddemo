@@ -1,6 +1,6 @@
-/* Ironwood 3D Product Demo • v11 • 2026-01-06 */
+/* Ironwood 3D Product Demo • v12 • 2026-01-06 */
 async function loadModels(){
-  const res = await fetch("./models/models.json?v=v11", { cache: "no-store" });
+  const res = await fetch("./models/models.json?v=v12", { cache: "no-store" });
   if(!res.ok) throw new Error("Could not load models/models.json");
   return await res.json();
 }
@@ -467,7 +467,7 @@ async function renderDiagnostics(){
   if(versionEl) versionEl.textContent = baseLine;
 
   try{
-    const res = await fetch(`./manifest.json?v=v11`, { cache: "no-store" });
+    const res = await fetch(`./manifest.json?v=v12`, { cache: "no-store" });
     if(!res.ok) throw new Error("manifest.json fetch failed");
     const manifest = await res.json();
 
@@ -482,7 +482,7 @@ async function renderDiagnostics(){
     const lines = [];
     for(const [path, meta] of entries){
       try{
-        const r = await fetch(`./${path}?v=v11`, { method: "GET", cache: "no-store" });
+        const r = await fetch(`./${path}?v=v12`, { method: "GET", cache: "no-store" });
         const good = r.ok;
         if(good) ok++;
         lines.push(`${good ? "✅" : "❌"} ${path}  (${meta.bytes} bytes)`);
