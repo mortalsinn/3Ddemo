@@ -1,0 +1,75 @@
+[
+  {
+    "id": "demo",
+    "title": "2 1/2\" Railing Profile",
+    "description": "Railing profile scan for internal review. Rotate / zoom to inspect the profile shape and edges.",
+    "src": "models/ironwood-demo.glb",
+    "subtitle": "Flat bottom \u2022 Red oak \u2022 Polycam GLB",
+    "category": "Railing Profiles",
+    "sku": "IW-DEMO-001",
+    "material": "Red Oak",
+    "finish": "Unfinished (demo)",
+    "dimensions": "2 1/2\" profile width",
+    "weight": "\u2014",
+    "lead_time": "\u2014",
+    "price_note": "Internal demo only",
+    "tags": [
+      "3D",
+      "Demo",
+      "Polycam",
+      "flat-bottom",
+      "profile",
+      "red-oak"
+    ],
+    "highlights": [
+      "Rotate / zoom / pan in-browser",
+      "Fast, single-file .GLB export",
+      "Easy to add more products via models.json"
+    ],
+    "downloads": [
+      {
+        "label": "Spec Sheet (PDF)",
+        "href": ""
+      },
+      {
+        "label": "Install Notes (PDF)",
+        "href": ""
+      }
+    ],
+    "images": [],
+    "updated": "2026-01-06",
+    "profile": "2 1/2\" c/w Flat Bottom"
+  },
+  {
+    "id": "ball-top",
+    "title": "Ball Top",
+    "subtitle": "Post cap detail \u2022 Red oak \u2022 Polycam GLB",
+    "description": "Ball top detail for internal demo. Rotate / zoom to inspect shape and surface quality.",
+    "category": "Post Options",
+    "sku": "IW-BALLTOP-RO",
+    "material": "Red Oak",
+    "profile": "Ball top",
+    "finish": "Unfinished (demo)",
+    "dimensions": "\u2014",
+    "weight": "\u2014",
+    "lead_time": "\u2014",
+    "price_note": "Internal demo only",
+    "tags": [
+      "ball-top",
+      "detail",
+      "post-cap",
+      "post-option",
+      "profile",
+      "red-oak"
+    ],
+    "highlights": [
+      "Quick 3D review for shape + proportions",
+      "Single-file .GLB for easy sharing",
+      "Great candidate for adding photos/spec PDF later"
+    ],
+    "downloads": [],
+    "images": [],
+    "src": "models/ball-top.glb",
+    "updated": "2026-01-06"
+  }
+]
