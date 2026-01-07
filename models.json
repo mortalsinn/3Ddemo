@@ -71,5 +71,38 @@
     "images": [],
     "src": "models/ball-top.glb",
     "updated": "2026-01-06"
+  },
+  {
+    "id": "high-profile-a-rail-2-5-8",
+    "title": "2 5/8\" High Profile A Rail",
+    "description": "High profile rail scan for internal review. Rotate / zoom to inspect the shape and edges.",
+    "src": "models/high-profile-a-rail-2-5-8.glb",
+    "subtitle": "High profile A \u2022 (material TBD) \u2022 Polycam GLB",
+    "category": "Railing Profiles",
+    "sku": "IW-DEMO-003",
+    "material": "\u2014",
+    "finish": "Unfinished (demo)",
+    "dimensions": "2 5/8\" high profile",
+    "weight": "\u2014",
+    "lead_time": "\u2014",
+    "price_note": "Internal demo only",
+    "tags": [
+      "3D",
+      "Demo",
+      "Polycam",
+      "profile",
+      "rail",
+      "high-profile",
+      "a-rail",
+      "2-5-8"
+    ],
+    "highlights": [
+      "Rotate / zoom / pan in-browser",
+      "Single-file .GLB for easy sharing",
+      "Good candidate for spec sheet + finish options later"
+    ],
+    "downloads": [],
+    "images": [],
+    "updated": "2026-01-07"
   }
 ]
