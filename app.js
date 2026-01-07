@@ -19,14 +19,6 @@ function el(tag, attrs={}, children=[]){
   return node;
 }
 
-function setActiveItem(listEl, id){
-  [...listEl.querySelectorAll(".item")].forEach(i=>i.classList.toggle("active", i.dataset.id === id));
-}
-
-function safeLetter(title){
-  return (title || "?").trim().charAt(0).toUpperCase() || "?";
-}
-
 function toast(msg){
   const t = document.getElementById("toast");
   if(!t) return;
@@ -35,24 +27,123 @@ function toast(msg){
   setTimeout(()=> t.classList.remove("show"), 1200);
 }
 
-function normalize(str){
-  return String(str || "").toLowerCase().trim();
+function normalize(str){ return String(str || "").toLowerCase().trim(); }
+function modelId(m, idx){ return m.id || String(idx); }
+function safeLetter(title){ return (title || "?").trim().charAt(0).toUpperCase() || "?"; }
+
+function setActiveItem(listEl, id){
+  [...listEl.querySelectorAll(".item")].forEach(i=>i.classList.toggle("active", i.dataset.id === id));
 }
 
-function modelId(m, idx){
-  return m.id || String(idx);
+function currentShareUrl(id){
+  const u = new URL(window.location.href);
+  u.searchParams.set("id", id);
+  return u.toString();
 }
 
-function buildCategoryOptions(models){
-  const catSel = document.getElementById("cat");
-  if(!catSel) return;
+async function copyShareLink(id){
+  const url = currentShareUrl(id);
+  try{
+    await navigator.clipboard.writeText(url);
+    toast("Copied link");
+  }catch(e){
+    window.prompt("Copy this link:", url);
+  }
+}
 
-  const cats = [...new Set(models.map(m => m.category).filter(Boolean))].sort((a,b)=> a.localeCompare(b));
-  cats.forEach(c=>{
-    catSel.appendChild(el("option", { value: c, text: c }));
+/** ===== Robust viewer controls (always wired) ===== */
+async function wireViewerControls(){
+  const mv = document.getElementById("mv");
+  if(!mv) return;
+
+  // Store initial camera values so Reset is truly "back to start"
+  const initial = {
+    orbit: mv.getAttribute("camera-orbit") || "0deg 75deg 105%",
+    target: mv.getAttribute("camera-target") || "auto auto auto",
+    fov: mv.getAttribute("field-of-view") || null
+  };
+
+  const btnReset = document.getElementById("btnReset");
+  const btnFit   = document.getElementById("btnFit");
+  const btnAuto  = document.getElementById("btnAuto");
+  const btnFull  = document.getElementById("btnFull");
+
+  async function ensureFraming(){
+    try{
+      if (typeof mv.updateFraming === "function") await mv.updateFraming();
+      if (typeof mv.jumpCameraToGoal === "function") mv.jumpCameraToGoal();
+    }catch(e){
+      console.warn("Framing error:", e);
+    }
+  }
+
+  btnReset?.addEventListener("click", async ()=>{
+    try{
+      // Reset camera + rotation to initial
+      mv.setAttribute("camera-target", initial.target);
+      mv.setAttribute("camera-orbit", initial.orbit);
+      if(initial.fov) mv.setAttribute("field-of-view", initial.fov);
+      if (typeof mv.resetTurntableRotation === "function") mv.resetTurntableRotation();
+      await ensureFraming();
+    }catch(e){ console.warn("Reset failed:", e); }
   });
+
+  btnFit?.addEventListener("click", async ()=>{
+    try{
+      // Tight framing using % distance (100% = tight fit)
+      mv.setAttribute("camera-target", "auto auto auto");
+      mv.setAttribute("camera-orbit", "0deg 75deg 100%");
+      await ensureFraming();
+    }catch(e){ console.warn("Fit failed:", e); }
+  });
+
+  btnAuto?.addEventListener("click", ()=>{
+    try{
+      mv.autoRotate = !mv.autoRotate;
+      btnAuto.textContent = mv.autoRotate ? "Stop Rotate" : "Auto Rotate";
+    }catch(e){ console.warn("Auto-rotate toggle failed:", e); }
+  });
+
+  // Fullscreen:
+  // - Prefer browser fullscreen API
+  // - Always toggle "presentation mode" so it visibly changes even if fullscreen is blocked
+  async function syncFullLabel(){
+    if(!btnFull) return;
+    const isFs = !!document.fullscreenElement;
+    const isPresent = document.body.classList.contains("present");
+    btnFull.textContent = (isFs || isPresent) ? "Exit Fullscreen" : "Fullscreen";
+  }
+
+  btnFull?.addEventListener("click", async ()=>{
+    // Always toggle present mode for a reliable visual change
+    document.body.classList.toggle("present");
+
+    try{
+      if(!document.fullscreenElement && document.documentElement.requestFullscreen){
+        await document.documentElement.requestFullscreen();
+      } else if(document.fullscreenElement && document.exitFullscreen){
+        await document.exitFullscreen();
+      }
+    }catch(e){
+      // ignore; present mode still works
+    }finally{
+      syncFullLabel();
+    }
+  });
+
+  document.addEventListener("fullscreenchange", syncFullLabel);
+  syncFullLabel();
+
+  // If user interacts with camera, stop auto-rotate once (nice feel)
+  mv.addEventListener("camera-change", () => {
+    try{
+      mv.autoRotate = false;
+      if(btnAuto) btnAuto.textContent = "Auto Rotate";
+    }catch(e){}
+  }, { once: true });
 }
 
+/** ===== Product panel rendering ===== */
 function renderChips(model){
   const chips = document.getElementById("chips");
   if(!chips) return;
@@ -67,7 +158,7 @@ function renderChips(model){
 
   parts.forEach(p=>{
     chips.appendChild(el("span", { class:"chip" }, [
-      el("strong", { }, p.k + ": "),
+      el("strong", {}, p.k + ": "),
       document.createTextNode(p.v)
     ]));
   });
@@ -131,7 +222,7 @@ function renderDownloads(model){
         el("div", { class:"label", text:"No files added yet" }),
         el("div", { class:"hint", text:"Add downloads[] in models/models.json (PDFs, images, etc.)" })
       ]),
-      el("a", { href:"#", onclick:(e)=>e.preventDefault(), class:"btn" }, ["OK"])
+      el("span", { class:"btn", style:"opacity:.55; cursor:default;" }, ["—"])
     ]));
     return;
   }
@@ -174,9 +265,9 @@ function setViewer(model){
   const titleEl = document.getElementById("modelTitle");
   const descEl = document.getElementById("modelDesc");
 
-  mv.setAttribute("src", model.src);
-  titleEl.textContent = model.title || "Model";
-  descEl.textContent = model.description || "";
+  if(mv && model?.src) mv.setAttribute("src", model.src);
+  if(titleEl) titleEl.textContent = model.title || "Model";
+  if(descEl) descEl.textContent = model.description || "";
 
   renderChips(model);
   renderKV(model);
@@ -184,10 +275,12 @@ function setViewer(model){
   renderDownloads(model);
   renderGallery(model);
 
-  // reset camera nicely after swap
-  setTimeout(()=> {
-    try { mv.resetTurntableRotation(); } catch(e) {}
-    try { mv.jumpCameraToGoal(); } catch(e) {}
+  // Re-frame after swapping
+  setTimeout(async ()=> {
+    try{
+      if (mv && typeof mv.updateFraming === "function") await mv.updateFraming();
+      if (mv && typeof mv.jumpCameraToGoal === "function") mv.jumpCameraToGoal();
+    }catch(e){}
   }, 150);
 }
 
@@ -209,7 +302,6 @@ function buildListItem(m, idx){
 function matches(m, q, cat){
   const nq = normalize(q);
   const ncat = normalize(cat);
-
   if(ncat && normalize(m.category) !== ncat) return false;
   if(!nq) return true;
 
@@ -221,21 +313,12 @@ function matches(m, q, cat){
   return hay.includes(nq);
 }
 
-function currentShareUrl(id){
-  const u = new URL(window.location.href);
-  u.searchParams.set("id", id);
-  return u.toString();
-}
-
-async function copyShareLink(id){
-  const url = currentShareUrl(id);
-  try{
-    await navigator.clipboard.writeText(url);
-    toast("Copied link");
-  }catch(e){
-    // fallback prompt
-    window.prompt("Copy this link:", url);
-  }
+function buildCategoryOptions(models){
+  const catSel = document.getElementById("cat");
+  if(!catSel) return;
+  catSel.querySelectorAll("option:not([value=''])").forEach(o=>o.remove());
+  const cats = [...new Set(models.map(m => m.category).filter(Boolean))].sort((a,b)=> a.localeCompare(b));
+  cats.forEach(c=> catSel.appendChild(el("option", { value: c, text: c })));
 }
 
 async function main(){
@@ -244,22 +327,23 @@ async function main(){
   const catEl = document.getElementById("cat");
 
   let models = [];
-  try {
+  try{
     models = await loadModels();
-  } catch (err){
+  }catch(err){
     console.error(err);
-    listEl.appendChild(el("div", { class:"item active", "data-id":"err" }, [
+    // Still show a helpful message, but controls remain wired
+    listEl?.appendChild(el("div", { class:"item active", "data-id":"err" }, [
       el("div", { class:"badge" }, "!"),
       el("div", {}, [
-        el("div", { class:"name" }, "models.json missing"),
-        el("div", { class:"desc" }, "Make sure models/models.json exists and is valid JSON.")
+        el("div", { class:"name" }, "models.json not loading"),
+        el("div", { class:"desc" }, "If you're running locally, use a local server. If on GitHub Pages, ensure models/models.json exists." )
       ])
     ]));
     return;
   }
 
   if(!Array.isArray(models) || models.length === 0){
-    listEl.appendChild(el("div", { class:"item active", "data-id":"none" }, [
+    listEl?.appendChild(el("div", { class:"item active", "data-id":"none" }, [
       el("div", { class:"badge" }, "?"),
       el("div", {}, [
         el("div", { class:"name" }, "No models found"),
@@ -271,22 +355,20 @@ async function main(){
 
   buildCategoryOptions(models);
 
-  // URL param support (?id=...)
   const urlId = new URL(window.location.href).searchParams.get("id");
   const startIdx = urlId ? Math.max(0, models.findIndex((m,i)=> modelId(m,i) === urlId)) : 0;
-  const startModel = models[startIdx >= 0 ? startIdx : 0];
 
   function render(){
     const q = qEl ? qEl.value : "";
     const cat = catEl ? catEl.value : "";
-    listEl.innerHTML = "";
+    if(listEl) listEl.innerHTML = "";
 
     const filtered = models
       .map((m,i)=> ({m,i,id:modelId(m,i)}))
       .filter(x => matches(x.m, q, cat));
 
     if(filtered.length === 0){
-      listEl.appendChild(el("div", { class:"item active", "data-id":"none" }, [
+      listEl?.appendChild(el("div", { class:"item active", "data-id":"none" }, [
         el("div", { class:"badge" }, "0"),
         el("div", {}, [
           el("div", { class:"name" }, "No matches" ),
@@ -308,18 +390,16 @@ async function main(){
         setViewer(x.m);
         history.replaceState({}, "", currentShareUrl(x.id));
       });
-      listEl.appendChild(item);
+      listEl?.appendChild(item);
     });
   }
 
-  // initial render selecting start model
-  // Render list with default filters, then force active selection to url model if provided
-  render();
-  if(urlId){
-    // Ensure we show the exact model if it exists (even if not first in list)
+  // Initial view
+  if(urlId && startIdx >= 0){
+    // render full list (no filters) and pick the one in URL
     if(qEl) qEl.value = "";
     if(catEl) catEl.value = "";
-    listEl.innerHTML = "";
+    if(listEl) listEl.innerHTML = "";
     models.forEach((m,i)=>{
       const id = modelId(m,i);
       const item = buildListItem(m,i);
@@ -332,80 +412,27 @@ async function main(){
         setViewer(m);
         history.replaceState({}, "", currentShareUrl(id));
       });
-      listEl.appendChild(item);
+      listEl?.appendChild(item);
     });
-  } else {
-    // Viewer already set by render() first item
+  }else{
+    render(); // will pick first filtered as active
   }
 
   // Search / filter
-  if(qEl) qEl.addEventListener("input", ()=> render());
-  if(catEl) catEl.addEventListener("change", ()=> render());
+  qEl?.addEventListener("input", ()=> render());
+  catEl?.addEventListener("change", ()=> render());
 
-  // Viewer controls
-  const mv = document.getElementById("mv");
-  document.getElementById("btnReset").addEventListener("click", ()=> mv.resetTurntableRotation());
-  document.getElementById("btnAuto").addEventListener("click", ()=>{
-    mv.autoRotate = !mv.autoRotate;
-    document.getElementById("btnAuto").textContent = mv.autoRotate ? "Stop Rotate" : "Auto Rotate";
-  });
-  document.getElementById("btnFit").addEventListener("click", async ()=>{
-    try {
-      // Tight framing using percentage-based orbit (web-friendly)
-      mv.setAttribute("camera-target", "auto auto auto");
-      mv.setAttribute("camera-orbit", "0deg 75deg 105%");
-      if (typeof mv.updateFraming === "function") { await mv.updateFraming(); }
-      if (typeof mv.jumpCameraToGoal === "function") { mv.jumpCameraToGoal(); }
-    } catch(e) { console.warn("Fit failed:", e); }
-  });
-
-  // Fullscreen (presentation-friendly)
-  const btnFull = document.getElementById("btnFull");
-  async function syncFullLabel(){
-    if(!btnFull) return;
-    const isFs = !!document.fullscreenElement;
-    btnFull.textContent = isFs ? "Exit Fullscreen" : "Fullscreen";
-  }
-  if(btnFull){
-    btnFull.addEventListener("click", async ()=>{
-      try{
-        // Prefer true browser fullscreen
-        if(!document.fullscreenElement && document.documentElement.requestFullscreen){
-          await document.documentElement.requestFullscreen();
-        } else if(document.fullscreenElement && document.exitFullscreen){
-          await document.exitFullscreen();
-        } else {
-          // Fallback: layout-only "presentation" mode
-          document.body.classList.toggle("present");
-        }
-      } catch(e){
-        // If fullscreen is blocked, use fallback
-        document.body.classList.toggle("present");
-      } finally {
-        syncFullLabel();
-      }
-    });
-    document.addEventListener("fullscreenchange", syncFullLabel);
-    syncFullLabel();
-  }
-
-  // Share control: click the "Share" pill anywhere to copy link
+  // Share pill
   const sharePill = document.querySelector(".searchbar .pill");
   if(sharePill){
     sharePill.style.cursor = "pointer";
     sharePill.title = "Copy a link that opens the currently-selected product";
     sharePill.addEventListener("click", ()=>{
-      const active = listEl.querySelector(".item.active");
+      const active = listEl?.querySelector(".item.active");
       const id = active ? active.dataset.id : modelId(models[0], 0);
       copyShareLink(id);
     });
   }
-
-  // Stop auto rotate once user interacts (nice feel)
-  mv.addEventListener("camera-change", () => {
-    mv.autoRotate = false;
-    document.getElementById("btnAuto").textContent = "Auto Rotate";
-  }, { once: true });
 
   // Keyboard shortcut: "/" focuses search
   document.addEventListener("keydown", (e)=>{
@@ -416,4 +443,6 @@ async function main(){
   });
 }
 
+// Run: wire controls first so buttons always work
+wireViewerControls();
 main();

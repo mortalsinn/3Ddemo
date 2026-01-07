@@ -67,3 +67,8 @@ SHARE LINKS:
 - Click the Share pill (top of the library) to copy a link.
 - Links look like: https://your-site/?id=new-product
   (so someone at work can open directly to a specific product)
+
+
+TROUBLESHOOT:
+- If buttons don't work, ensure app.js uploaded and hard refresh (Ctrl+Shift+R).
+- If running locally by double-clicking index.html, fetch() will fail; run a local server (python -m http.server).
