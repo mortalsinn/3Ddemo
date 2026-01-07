@@ -1,5 +1,5 @@
-/* Ironwood 3D Product Demo • Estimate Builder • v10 • 2026-01-06 */
-const VERSION = "v10";
+/* Ironwood 3D Product Demo • Estimate Builder • v11 • 2026-01-06 */
+const VERSION = "v11";
 const BUILD_DATE = "2026-01-06";
 const STORAGE_KEY = "ironwood_demo_estimate_v1";
 
@@ -284,6 +284,121 @@ async function renderDiagnostics(){
   }
 }
 
+
+function escapeHtml(s){
+  return String(s || "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
+}
+
+function renderPrintSheet(state){
+  const host = $("printArea");
+  if(!host) return;
+
+  const totals = calcTotals(state);
+  const lines = state.lines || [];
+
+  const logoPath = "./assets/logo.png";
+
+  const rows = lines.map(l=>{
+    const qty = Number(l.qty||0);
+    const unit = Number(l.unit_price||0);
+    const ext = qty * unit;
+    return `
+      <tr>
+        <td><strong>${escapeHtml(l.name||"")}</strong><br/><span style="color:#444; font-size:11px;">${escapeHtml(l.note||"")}</span></td>
+        <td class="r">${escapeHtml(qty)}</td>
+        <td class="r">${money(unit)}</td>
+        <td class="r">${money(ext)}</td>
+      </tr>
+    `;
+  }).join("");
+
+  const validUntil = (() => {
+    try{
+      const d = new Date(state.date || nowISODate());
+      d.setDate(d.getDate() + Number(state.valid_days||30));
+      return d.toISOString().slice(0,10);
+    }catch(e){ return ""; }
+  })();
+
+  host.innerHTML = `
+    <div class="print-sheet">
+      <div class="print-top">
+        <div class="print-brand">
+          <img src="${logoPath}" alt="Ironwood Stair & Rail" onerror="this.style.display='none'"/>
+          <div>
+            <div class="b1">Ironwood Stair &amp; Rail Inc.</div>
+            <div class="b2">108-239 Mayland Pl NE, Calgary, AB T2E 7Z8 • (403) 552-1007 • info@ironwoodstairs.com</div>
+          </div>
+        </div>
+        <div class="print-meta">
+          <strong>Estimate</strong><br/>
+          <div>Estimate #: ${escapeHtml(state.id||"")}</div>
+          <div>Date: ${escapeHtml(state.date||"")}</div>
+          <div>Valid until: ${escapeHtml(validUntil)}</div>
+        </div>
+      </div>
+
+      <div class="print-grid">
+        <div class="box">
+          <div class="k">Client</div>
+          <div class="v">${escapeHtml(state.client||"")}</div>
+        </div>
+        <div class="box">
+          <div class="k">Project</div>
+          <div class="v">${escapeHtml(state.project||"")}</div>
+        </div>
+        <div class="box">
+          <div class="k">Site / Address</div>
+          <div class="v">${escapeHtml(state.address||"")}</div>
+        </div>
+        <div class="box">
+          <div class="k">Notes</div>
+          <div class="v">${escapeHtml(state.notes||"")}</div>
+        </div>
+      </div>
+
+      <table class="print-lines">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th class="r">Qty</th>
+            <th class="r">Unit</th>
+            <th class="r">Extended</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows || `<tr><td colspan="4" style="color:#444;">No line items</td></tr>`}
+        </tbody>
+      </table>
+
+      <div class="print-totals">
+        <div class="tot">
+          <div class="row"><div>Subtotal</div><div>${money(totals.sub)}</div></div>
+          <div class="row"><div>Markup (${escapeHtml(state.markup_pct||0)}%)</div><div>${money(totals.markup)}</div></div>
+          <div class="row"><div>Discount</div><div>- ${money(totals.discount)}</div></div>
+          <div class="row"><div>Pre-tax</div><div>${money(totals.preTax)}</div></div>
+          <div class="row"><div>Tax (${escapeHtml(state.tax_pct||0)}%)</div><div>${money(totals.tax)}</div></div>
+          <div class="row total"><div>Total</div><div>${money(totals.total)}</div></div>
+        </div>
+      </div>
+
+      <div class="print-terms">
+        <strong>Terms / Disclaimers (demo)</strong>
+        <ul>
+          <li>Pricing and specifications shown are for demo purposes only.</li>
+          <li>Final scope, site measurements, and code requirements to be confirmed on site.</li>
+          <li>Finishes, materials, and lead times subject to availability.</li>
+        </ul>
+      </div>
+
+      <div class="print-sign">
+        <div class="sig">Client Signature</div>
+        <div class="sig">Ironwood Representative</div>
+      </div>
+    </div>
+  `;
+}
+
 async function main(){
   $("estDate").value = nowISODate();
 
@@ -395,11 +510,13 @@ async function main(){
 
   $("btnPrint").addEventListener("click", ()=> {
     syncFromUI();
+    renderPrintSheet(state);
     window.print();
   });
 
   renderLines(state);
   renderDiagnostics();
+  window.addEventListener('beforeprint', ()=>{ try{ renderPrintSheet(state); }catch(e){} });
 }
 
 main().catch(err=> {

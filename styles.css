@@ -1,4 +1,4 @@
-/* Ironwood 3D Product Demo • v10 • 2026-01-06 */
+/* Ironwood 3D Product Demo • v11 • 2026-01-06 */
 :root{
   --bg:#0b0b0d;
   --panel:#111217;
@@ -498,3 +498,167 @@ model-viewer{
   display:none;
 }
 /* === End Versioning v9 === */
+
+/* === Auto Theme (prefers-color-scheme) v11 === */
+/* Make native form controls match the theme and stay readable */
+:root{
+  /* Default: dark (matches current demo look) */
+  color-scheme: dark;
+  --bg: #0b0b0d;
+  --panel: rgba(255,255,255,.06);
+  --panel2: rgba(255,255,255,.04);
+  --border: rgba(255,255,255,.10);
+  --text: rgba(255,255,255,.92);
+  --muted: rgba(255,255,255,.68);
+  --muted2: rgba(255,255,255,.52);
+  --inputBg: rgba(0,0,0,.28);
+  --inputText: rgba(255,255,255,.92);
+  --inputPlaceholder: rgba(255,255,255,.55);
+}
+
+/* Light mode: keep Ironwood accent but flip to a clean light UI */
+@media (prefers-color-scheme: light){
+  :root{
+    color-scheme: light;
+    --bg: #f6f3eb;
+    --panel: rgba(0,0,0,.06);
+    --panel2: rgba(0,0,0,.04);
+    --border: rgba(0,0,0,.12);
+    --text: rgba(10,10,12,.92);
+    --muted: rgba(10,10,12,.68);
+    --muted2: rgba(10,10,12,.52);
+    --inputBg: rgba(255,255,255,.85);
+    --inputText: rgba(10,10,12,.92);
+    --inputPlaceholder: rgba(10,10,12,.50);
+  }
+}
+
+/* Apply theme variables to existing layout */
+body{
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Form controls: the key fix for your dropdown readability */
+.input, .select, select, input, textarea {
+  background: var(--inputBg) !important;
+  color: var(--inputText) !important;
+  border-color: var(--border) !important;
+}
+.input::placeholder, textarea::placeholder {
+  color: var(--inputPlaceholder) !important;
+}
+select option {
+  color: var(--inputText);
+  background: var(--bg);
+}
+/* In some browsers the arrow gets faint — this helps on modern WebKit */
+.select {
+  -webkit-text-fill-color: var(--inputText);
+}
+/* === End Auto Theme v11 === */
+
+/* === Print Layout (Estimate Builder) v11 === */
+/* Print-friendly estimate sheet */
+.print-area{ display:none; }
+
+@media print {
+  /* Force clean sheet */
+  :root{ color-scheme: light; }
+  body{ background:#fff !important; color:#000 !important; }
+  .utility, .nav, .hero, #toast, #diagDetails{ display:none !important; }
+  .main{ padding: 0 !important; }
+  .container{ max-width: 100% !important; }
+  .grid{ grid-template-columns: 1fr !important; padding: 0 !important; height: auto !important; }
+  .viewer-wrap, .card{ box-shadow:none !important; border: none !important; background: transparent !important; }
+  /* Hide interactive estimate UI and show the generated print sheet */
+  .estimate-ui{ display:none !important; }
+  .print-area{ display:block !important; }
+
+  .print-sheet{
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    padding: 24px 28px;
+  }
+  .print-top{
+    display:flex; justify-content:space-between; align-items:flex-start; gap: 18px;
+    border-bottom: 2px solid #111;
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+  }
+  .print-brand{ display:flex; gap: 14px; align-items:flex-start; }
+  .print-brand img{ width: 160px; height:auto; }
+  .print-brand .b1{ font-weight: 900; font-size: 18px; }
+  .print-brand .b2{ color:#333; font-size: 12px; margin-top: 2px; }
+  .print-meta{
+    text-align:right;
+    font-size: 12px;
+    color:#111;
+  }
+  .print-meta strong{ font-size: 14px; }
+  .print-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 18px;
+    margin: 14px 0 10px;
+    font-size: 12px;
+  }
+  .print-grid .box{
+    border: 1px solid #ddd;
+    padding: 10px 12px;
+    border-radius: 10px;
+  }
+  .print-grid .k{ color:#444; font-weight:800; font-size: 11px; text-transform: uppercase; letter-spacing:.06em; }
+  .print-grid .v{ margin-top: 4px; font-weight: 650; color:#111; }
+
+  table.print-lines{
+    width:100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+    font-size: 12px;
+  }
+  table.print-lines th, table.print-lines td{
+    border-bottom: 1px solid #e6e6e6;
+    padding: 10px 8px;
+    vertical-align: top;
+  }
+  table.print-lines th{
+    text-align:left;
+    font-weight: 900;
+    border-bottom: 2px solid #111;
+  }
+  table.print-lines td.r, table.print-lines th.r{ text-align:right; }
+  .print-totals{
+    display:flex; justify-content:flex-end;
+    margin-top: 10px;
+  }
+  .print-totals .tot{
+    width: 320px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+  .print-totals .row{ display:flex; justify-content:space-between; padding: 6px 0; }
+  .print-totals .row.total{ border-top: 2px solid #111; margin-top: 6px; padding-top: 10px; font-weight: 900; font-size: 14px; }
+
+  .print-terms{
+    margin-top: 14px;
+    font-size: 11px;
+    color:#222;
+  }
+  .print-terms ul{ margin: 8px 0 0 18px; }
+
+  .print-sign{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 18px;
+    font-size: 12px;
+  }
+  .sig{
+    border-top: 1px solid #444;
+    padding-top: 8px;
+  }
+}
+/* === End Print Layout v11 === */
+

@@ -6,7 +6,7 @@
   <title>Ironwood Estimate Builder (Demo)</title>
 
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-  <link rel="stylesheet" href="./styles.css?v=v10" />
+  <link rel="stylesheet" href="./styles.css?v=v11" />
 </head>
 <body>
 
@@ -69,6 +69,7 @@
 
   <div class="main">
     <div class="container">
+      <div class="estimate-ui">
       <div class="grid" style="grid-template-columns: 420px 1fr;">
 
         <div class="card">
@@ -173,6 +174,11 @@
     </div>
   </div>
 
+      </div>
+      <div class="print-area" id="printArea"></div>
+    </div>
+  </div>
+
   <div class="footer">
     <div class="container">
       <div class="row">
@@ -204,6 +210,6 @@
   <div id="toast" class="toast">Copied link</div>
 
   <script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
-  <script src="./estimate.js?v=v10"></script>
+  <script src="./estimate.js?v=v11"></script>
 </body>
 </html>

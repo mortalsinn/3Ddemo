@@ -1,36 +1,36 @@
 {
   "name": "Ironwood 3D Product Demo",
-  "version": "v10",
+  "version": "v11",
   "build_date_local": "2026-01-06",
-  "generated_at_utc": "2026-01-07T03:59:04Z",
+  "generated_at_utc": "2026-01-07T04:05:45Z",
   "files": {
     "README.txt": {
       "sha256": "2a8ca19c18e08306cc126f2c652694f0531bb8e3f14e06650388696e39e7c057",
       "bytes": 2247
     },
     "app.js": {
-      "sha256": "06ea3088e9335bf062af36578991f16879f3f73882b26575d2a98dd40e33822a",
+      "sha256": "5dcfdac6ebd40b3ed2bbc57b1150a39fd412acbaea9562df0bb5fec5ecc1d8aa",
       "bytes": 16525
     },
     "estimate.html": {
-      "sha256": "9486c5dac7f675ccdc15734bbeb32e7458337ce6b6745854b7ed46b91f1d24ad",
-      "bytes": 8647
+      "sha256": "00324d8ada4f93c4abc276f9eef2ff02add0e539fca92f71185a1a964dad8528",
+      "bytes": 8765
     },
     "estimate.js": {
-      "sha256": "d73892706a1821f467754d9a04266ab424ecb23a6026aae35830954df2802563",
-      "bytes": 12647
+      "sha256": "09c3f8286067978f4fb9f0fb3602861711155fe79412d05c58d7ab4cdf4f2392",
+      "bytes": 16785
     },
     "estimate_catalog.json": {
-      "sha256": "de62c9de6e15096bf5f38495ce3ad1e274483989f8b342ab2c4c451d6da63207",
+      "sha256": "9de2171508bcbe61937a91477acd9ab1e57f83edac204bd0a1c336fb431077ba",
       "bytes": 647
     },
     "index.html": {
-      "sha256": "549ad5988d857d19716b9860599c7d88b0f9b55cd6c45ee6ec778a3f046fd6a9",
+      "sha256": "fd9fd7627c6b71ba337f8d4e875e3b7639f231086dbe6a1e1120b124b84b6fb9",
       "bytes": 8137
     },
     "manifest.json": {
-      "sha256": "10d0bae0f509702fb543e23d49b06652834951cc82ddbbec0c0bf2017c7da4f6",
-      "bytes": 1110
+      "sha256": "0bf44a2939945e086c621aa123a423c6a282b17e5be56bf45f7605b22b40180e",
+      "bytes": 1653
     },
     "models/ball-top.glb": {
       "sha256": "52375b881882fb40fe5fa3ff3d7cdf35b260ce953d2e14cc3c0eab7b61fed24d",
@@ -45,8 +45,8 @@
       "bytes": 1991
     },
     "styles.css": {
-      "sha256": "6a172871d4814199b9873b3e96e7fcf5497f15023451ff3d7380f5827904c5cc",
-      "bytes": 11036
+      "sha256": "1d42e88b4209698e6add7217912a10e93db35aa86ca0be4bc6ac52b3ffe855be",
+      "bytes": 15821
     }
   }
 }
