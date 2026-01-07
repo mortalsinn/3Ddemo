@@ -1,5 +1,6 @@
+/* Ironwood 3D Product Demo • v9 • 2026-01-06 */
 async function loadModels(){
-  const res = await fetch("./models/models.json", { cache: "no-store" });
+  const res = await fetch("./models/models.json?v=v9", { cache: "no-store" });
   if(!res.ok) throw new Error("Could not load models/models.json");
   return await res.json();
 }
@@ -454,3 +455,50 @@ async function main(){
 // Run: wire controls first so buttons always work
 wireViewerControls();
 main();
+
+
+/** ===== Version + Diagnostics (v9) ===== */
+async function renderDiagnostics(){
+  const versionEl = document.getElementById("demoVersion");
+  const statusEl = document.getElementById("diagStatus");
+  const listEl = document.getElementById("diagList");
+
+  const baseLine = `Demo v9 • Build 2026-01-06`;
+  if(versionEl) versionEl.textContent = baseLine;
+
+  try{
+    const res = await fetch(`./manifest.json?v=v9`, { cache: "no-store" });
+    if(!res.ok) throw new Error("manifest.json fetch failed");
+    const manifest = await res.json();
+
+    if(versionEl){
+      versionEl.textContent = `${baseLine} • Manifest OK (generated ${manifest.generated_at_utc})`;
+    }
+    if(statusEl) statusEl.textContent = "Checking expected files…";
+
+    // Check each file exists by doing a HEAD/GET request (GitHub Pages supports GET reliably)
+    const entries = Object.entries(manifest.files || {});
+    let ok = 0;
+    const lines = [];
+    for(const [path, meta] of entries){
+      try{
+        const r = await fetch(`./${path}?v=v9`, { method: "GET", cache: "no-store" });
+        const good = r.ok;
+        if(good) ok++;
+        lines.push(`${good ? "✅" : "❌"} ${path}  (${meta.bytes} bytes)`);
+      } catch(e){
+        lines.push(`❌ ${path}  (fetch error)`);
+      }
+    }
+    if(statusEl) statusEl.textContent = `${ok} / ${entries.length} files reachable`;
+    if(listEl) listEl.textContent = lines.join("\n");
+  }catch(e){
+    if(versionEl) versionEl.textContent = `${baseLine} • Manifest ERROR`;
+    if(statusEl) statusEl.textContent = "Could not load manifest.json (check repo root).";
+    if(listEl) listEl.textContent = "";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  renderDiagnostics();
+});

@@ -1,0 +1,36 @@
+{
+  "name": "Ironwood 3D Product Demo",
+  "version": "v9",
+  "build_date_local": "2026-01-06",
+  "generated_at_utc": "2026-01-07T03:49:19Z",
+  "files": {
+    "README.txt": {
+      "sha256": "2a8ca19c18e08306cc126f2c652694f0531bb8e3f14e06650388696e39e7c057",
+      "bytes": 2247
+    },
+    "app.js": {
+      "sha256": "df96dfbbc6dcb37036e05ce5973bc4d7ed4766ff26acf1bc75372f386a061812",
+      "bytes": 14734
+    },
+    "index.html": {
+      "sha256": "149667fbb5e10ad6e1cbd62af866cceab61e4915b742f3f658fae68f7a9dd18b",
+      "bytes": 7347
+    },
+    "models/ball-top.glb": {
+      "sha256": "52375b881882fb40fe5fa3ff3d7cdf35b260ce953d2e14cc3c0eab7b61fed24d",
+      "bytes": 6777852
+    },
+    "models/ironwood-demo.glb": {
+      "sha256": "001db141a35dc5ca11ee0cda7bb62fb8a8750b0aa8e10cc3cd8dd5f842ba5870",
+      "bytes": 7605148
+    },
+    "models/models.json": {
+      "sha256": "12cada79175adab03697c135005dbb1a2f579fadced8ac5854345f55e40e09bb",
+      "bytes": 1991
+    },
+    "styles.css": {
+      "sha256": "050ccf92bd3ee32a75f651418a1ce5381a12f8971310a23505230b74e4cf4aa1",
+      "bytes": 10654
+    }
+  }
+}

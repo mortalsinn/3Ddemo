@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- Ironwood 3D Product Demo • v9 • 2026-01-06 -->
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -8,7 +9,7 @@
   <!-- model-viewer (simple, web-native 3D viewer) -->
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
-  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="./styles.css?v=v9" />
 </head>
 <body>
 
@@ -26,7 +27,16 @@
         <div class="right">
           <a class="pill" href="https://ironwoodstairs.com/make-a-payment/" target="_blank" rel="noreferrer">Make a Payment</a>
           <a class="pill" href="https://ironwoodstairs.com/contact-us/" target="_blank" rel="noreferrer">Request A Quote</a>
-        </div>
+        
+        <details id="diagDetails" style="margin-top:10px; max-width: 520px;">
+          <summary style="cursor:pointer; color: rgba(255,255,255,.75);">Diagnostics</summary>
+          <div style="margin-top:10px; display:flex; flex-direction:column; gap:8px;">
+            <div id="diagStatus" style="color: rgba(255,255,255,.65);">Loading…</div>
+            <div id="diagList" style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; font-size:12px; color: rgba(255,255,255,.65);"></div>
+          </div>
+        </details>
+
+</div>
       </div>
     </div>
   </div>
@@ -180,14 +190,14 @@
           <a href="mailto:info@ironwoodstairs.com">info@ironwoodstairs.com</a>
         </div>
         <div>
-          © <span id="yr"></span> — internal demo page
+          © <span id="yr"></span> — internal demo page<br/><span id="demoVersion" style="color: rgba(255,255,255,.65);"></span>
         </div>
       </div>
     </div>
   </div>
 
   <script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
-  <script src="./app.js"></script>
+  <script src="./app.js?v=v9"></script>
   <div id="toast" class="toast">Copied link</div>
 
 </body>

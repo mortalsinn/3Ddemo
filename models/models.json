@@ -39,5 +39,37 @@
     "images": [],
     "updated": "2026-01-06",
     "profile": "2 1/2\" c/w Flat Bottom"
+  },
+  {
+    "id": "ball-top",
+    "title": "Ball Top",
+    "subtitle": "Post cap detail \u2022 Red oak \u2022 Polycam GLB",
+    "description": "Ball top detail for internal demo. Rotate / zoom to inspect shape and surface quality.",
+    "category": "Post Options",
+    "sku": "IW-BALLTOP-RO",
+    "material": "Red Oak",
+    "profile": "Ball top",
+    "finish": "Unfinished (demo)",
+    "dimensions": "\u2014",
+    "weight": "\u2014",
+    "lead_time": "\u2014",
+    "price_note": "Internal demo only",
+    "tags": [
+      "ball-top",
+      "detail",
+      "post-cap",
+      "post-option",
+      "profile",
+      "red-oak"
+    ],
+    "highlights": [
+      "Quick 3D review for shape + proportions",
+      "Single-file .GLB for easy sharing",
+      "Great candidate for adding photos/spec PDF later"
+    ],
+    "downloads": [],
+    "images": [],
+    "src": "models/ball-top.glb",
+    "updated": "2026-01-06"
   }
 ]
