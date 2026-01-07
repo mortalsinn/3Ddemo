@@ -1,6 +1,6 @@
-/* Ironwood 3D Product Demo • Estimate Builder • v12 • 2026-01-06 */
-const VERSION = "v12";
-const BUILD_DATE = "2026-01-06";
+/* Ironwood 3D Product Demo • Estimate Builder • v14 • 2026-01-06 */
+const VERSION = "v14";
+const BUILD_DATE = "2026-01-07";
 const STORAGE_KEY = "ironwood_demo_estimate_v1";
 
 function $(id){ return document.getElementById(id); }
@@ -67,6 +67,74 @@ function decodeShare(b64url){
   const pad = b64.length % 4 ? "=".repeat(4 - (b64.length % 4)) : "";
   const s = decodeURIComponent(escape(atob(b64 + pad)));
   return JSON.parse(s);
+}
+
+
+const ZOHO_WEBHOOK_KEY = "ironwood_demo_zoho_webhook_url";
+
+function getZohoWebhookUrl(){
+  try{ return localStorage.getItem(ZOHO_WEBHOOK_KEY) || ""; }catch(e){ return ""; }
+}
+function setZohoWebhookUrl(url){
+  try{ localStorage.setItem(ZOHO_WEBHOOK_KEY, url); }catch(e){}
+}
+async function sendEstimateToZoho(state){
+  const url = getZohoWebhookUrl();
+  if(!url){
+    toast("Zoho not configured");
+    const u = window.prompt("Paste your Zoho Flow Webhook URL (Incoming Webhook Trigger):");
+    if(!u) return;
+    setZohoWebhookUrl(u.trim());
+  }
+
+  const payload = {
+    source: "Ironwood Demo Site",
+    version: VERSION,
+    sent_at: new Date().toISOString(),
+    estimate: {
+      id: state.id,
+      scope_id: state.scope_id || "",
+      scope_name: state.scope_name || "",
+      client: state.client || "",
+      project: state.project || "",
+      address: state.address || "",
+      date: state.date || "",
+      valid_days: state.valid_days || 30,
+      notes: state.notes || "",
+      markup_pct: Number(state.markup_pct || 0),
+      discount_amt: Number(state.discount_amt || 0),
+      tax_pct: Number(state.tax_pct || 0),
+      lines: (state.lines || []).map(l => ({
+        name: l.name || "",
+        qty: Number(l.qty || 0),
+        unit_price: Number(l.unit_price || 0),
+        note: l.note || ""
+      })),
+      totals: calcTotals(state)
+    }
+  };
+
+  const endpoint = getZohoWebhookUrl();
+  try{
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    // Some webhook endpoints respond with 200/201 but may have empty body
+    if(!res.ok){
+      const txt = await res.text().catch(()=> "");
+      console.warn("Zoho webhook error", res.status, txt);
+      toast(`Zoho send failed (${res.status})`);
+      alert("Zoho send failed.\n\nIf this is a CORS error (blocked by browser), you can fix it by routing through a tiny serverless proxy (Vercel/Netlify/Cloudflare Worker).\n\nDetails:\n" + (txt || "(no response body)"));
+      return;
+    }
+    toast("Sent to Zoho CRM ✅");
+  } catch(e){
+    console.error(e);
+    toast("Zoho send error");
+    alert("Zoho send failed. This is often a browser CORS block.\n\nFix: use Zoho Flow webhook via a serverless proxy (Vercel/Netlify/Cloudflare Worker) OR run the demo from a local server that can proxy.\n\nError:\n" + e);
+  }
 }
 
 function download(filename, text, mime="application/json"){
@@ -351,6 +419,7 @@ function renderPrintSheet(state){
         </div>
         <div class="print-meta">
           <strong>Estimate</strong><br/>
+          <div>Scope: ${escapeHtml(state.scope_name || "")}</div>
           <div>Estimate #: ${escapeHtml(state.id||"")}</div>
           <div>Date: ${escapeHtml(state.date||"")}</div>
           <div>Valid until: ${escapeHtml(validUntil)}</div>
@@ -450,6 +519,55 @@ async function main(){
     return (a.name || "").localeCompare(b.name || "");
   });
   const byId = Object.fromEntries(templates.map(t=> [t.id, t]));
+
+  function setScopeHint(t){
+    if(!scopeHint) return;
+    if(!t){ scopeHint.textContent = "Pick a scope template to quickly populate line items."; return; }
+    scopeHint.textContent = `${t.group || "Scope"} • ${t.summary || ""}`.trim();
+  }
+
+  function applyScopeTemplate(t, { replace=false } = {}){
+    if(!t) return;
+    if(replace) state.lines = [];
+    const addLines = (t.lines || []).map(l=> ({
+      name: l.name || "",
+      qty: Number(l.qty ?? 1),
+      unit_price: Number(l.unit_price ?? 0),
+      note: l.note || ""
+    }));
+    state.lines = [...(state.lines || []), ...addLines];
+
+    // Track selected scope on the estimate
+    state.scope_id = t.id || "";
+    state.scope_name = t.name || "";
+
+    // Apply defaults if desired
+    if(scopeApplyDefaults && scopeApplyDefaults.checked && t.defaults){
+      if(typeof t.defaults.markup_pct !== "undefined") state.markup_pct = Number(t.defaults.markup_pct);
+      if(typeof t.defaults.tax_pct !== "undefined") state.tax_pct = Number(t.defaults.tax_pct);
+    }
+
+    // Notes/terms
+    if(t.notes && !state.notes) state.notes = t.notes;
+    renderTerms(scopes.base_terms || [], t.terms || []);
+    saveDraft(state);
+    setUIFromState(state);
+    $("estNo").textContent = `(#${state.id})`;
+    renderLines(state);
+    toast(replace ? "Scope applied (replaced)" : "Scope added");
+  }
+
+  if(scopeSelect){
+    scopeSelect.innerHTML = `<option value="">— Choose a scope template —</option>` +
+      templates.map(t => `<option value="${t.id}">${t.group || "Scope"} — ${t.name}</option>`).join("");
+    scopeSelect.addEventListener("change", ()=> {
+      const t = byId[scopeSelect.value];
+      setScopeHint(t);
+    });
+  }
+  setScopeHint(null);
+  renderTerms(scopes.base_terms || [], []);
+
 
   if(scopeSelect){
     scopeSelect.innerHTML =
@@ -588,6 +706,19 @@ async function main(){
     renderLines(state);
   });
 
+  $("btnScopeAdd").addEventListener("click", ()=> {
+    const id = $("scopeSelect")?.value || "";
+    if(!id){ toast("Pick a scope"); return; }
+    applyScopeTemplate(byId[id], { replace: false });
+  });
+
+  $("btnScopeReplace").addEventListener("click", ()=> {
+    const id = $("scopeSelect")?.value || "";
+    if(!id){ toast("Pick a scope"); return; }
+    applyScopeTemplate(byId[id], { replace: true });
+  });
+
+
   $("btnExportJson").addEventListener("click", ()=> {
     syncFromUI();
     download(`ironwood-estimate-${state.id}.json`, JSON.stringify({...state, totals: calcTotals(state)}, null, 2), "application/json");
@@ -626,6 +757,26 @@ async function main(){
     renderPrintSheet(state);
     window.print();
   });
+
+  $("btnZohoSetup").addEventListener("click", async ()=> {
+    const current = getZohoWebhookUrl();
+    const u = window.prompt("Zoho Flow Webhook URL (Incoming Webhook Trigger):", current || "");
+    if(u === null) return; // cancelled
+    const v = u.trim();
+    if(!v){
+      try{ localStorage.removeItem(ZOHO_WEBHOOK_KEY); }catch(e){}
+      toast("Zoho cleared");
+      return;
+    }
+    setZohoWebhookUrl(v);
+    toast("Zoho configured");
+  });
+
+  $("btnZohoSend").addEventListener("click", async ()=> {
+    syncFromUI();
+    await sendEstimateToZoho(state);
+  });
+
 
   renderLines(state);
   renderDiagnostics();
